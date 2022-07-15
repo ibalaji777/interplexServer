@@ -21,6 +21,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 import AssurancemediasController from 'App/Controllers/Http/AssurancemediasController'
 import BranchesController from 'App/Controllers/Http/BranchesController'
+import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsController'
 import MasterproductsController from 'App/Controllers/Http/MasterproductsController'
 import QasformonesController from 'App/Controllers/Http/QasformonesController'
 import QasformtwosController from 'App/Controllers/Http/QasformtwosController'
@@ -116,6 +117,35 @@ Route.post('/branch/remove', async (ctx) => {
 
 Route.post('/branch/update', async (ctx) => {
   return new BranchesController().updateBranch(ctx)
+})
+
+// **************upload Types***************
+
+Route.get('/readuploadtype', async (ctx) => {
+  return new UploadtypesController().readUploadType(ctx)
+})
+
+Route.post('/uploadtype/create', async (ctx) => {
+  return new UploadtypesController().createUploadType(ctx)
+})
+
+
+Route.post('/uploadtype/remove', async (ctx) => {
+  return new UploadtypesController().removeUploadType(ctx)
+})
+
+Route.post('/uploadtype/update', async (ctx) => {
+  return new UploadtypesController().updateUploadType(ctx)
+})
+
+// *************config**********************
+
+Route.get('/readheaderconfig', async (ctx) => {
+  return new HeaderconfigsController().HeaderConfig(ctx)
+})
+
+Route.post('/headerconfig/update', async (ctx) => {
+  return new HeaderconfigsController().updateHeaderConfig(ctx)
 })
 
 

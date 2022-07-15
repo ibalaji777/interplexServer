@@ -1,18 +1,11 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Uploadtype extends BaseModel {
-@column({ isPrimary: true })
-public id: number
+export default class Headerconfig extends BaseModel {
+  @column({ isPrimary: true })
+  public id: String
 @column()
-public title:String
-@column()
-public branch:String
-@column()
-public name:String
-@column()
-public date:Date
-
+public config//:Array<JSON>
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
 

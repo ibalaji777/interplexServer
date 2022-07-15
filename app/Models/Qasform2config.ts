@@ -1,17 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class Uploadtype extends BaseModel {
-@column({ isPrimary: true })
-public id: number
-@column()
-public title:String
-@column()
-public branch:String
-@column()
-public name:String
-@column()
-public date:Date
+export default class Qasform2config extends BaseModel {
+  @column({ isPrimary: true })
+  public id: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
