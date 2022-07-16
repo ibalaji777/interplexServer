@@ -4,11 +4,33 @@ import Qasformtwo from "App/Models/Qasformtwo";
 
 export default class QasformonesController {
 
+  public async invoiceUpload(ctx:HttpContextContract){
+  // Access file
+  const coverImage = ctx.request.file('file', {
+    extnames: ['jpg', 'png', 'jpeg'],
+    size: '3mb'
+  })
+console.log(coverImage)
+  // Check for errors
+  // if (coverImage.hasErrors()) {
+  //   return coverImage.errors()
+  // }
+
+  // Move to uploads directory
+  await coverImage.move('uploads')
+}
+
   public async addInvoices(ctx:HttpContextContract){
 
     var invoices=ctx.request.input('invoices')
+
+    return invoices;
 for(var invoiceIndex in invoices){
 var qasFormOneArray=invoices[invoiceIndex].qasForm1New;
+console.log('Gallery',invoices[invoiceIndex].gallery)
+
+
+
   for(var qasForm1Index in qasFormOneArray){
 
     const    {
@@ -38,6 +60,7 @@ var qasFormOneArray=invoices[invoiceIndex].qasForm1New;
       date=new Date(),
 
         }=qasFormOneArray[qasForm1Index]
+
 
         // console.log("before",qasFormOneArray[qasForm1Index])
   var qasformone= await Qasformone.create({
@@ -72,7 +95,7 @@ var qasform2Products=qasFormOneArray[qasForm1Index].qasForm2New
 for(var qasform2Productindex in qasform2Products)
 {
   var product=qasform2Products[qasform2Productindex];
-console.log("product",product)
+// console.log("product",product)
 
 var {
   qas_form_one_id=0,

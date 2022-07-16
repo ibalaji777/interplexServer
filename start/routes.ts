@@ -160,6 +160,12 @@ Route.post('/addInvoices', async (ctx) => {
   return new QasformonesController().addInvoices(ctx)
 })
 
+Route.post('/invoiceupload', async (ctx) => {
+  return new QasformonesController().invoiceUpload(ctx)
+})
+
+
+
 // Route.get('/defaultUser', async (ctx) => {
 //  return new UsersController().defaultUser(ctx)
 
