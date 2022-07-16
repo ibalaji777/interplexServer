@@ -164,6 +164,11 @@ Route.post('/invoiceupload', async (ctx) => {
   return new QasformonesController().invoiceUpload(ctx)
 })
 
+// public async getelement(ctx:HttpContextContract){
+Route.get('/getelement', async (ctx) => {
+ return new QasformonesController().getelement(ctx)
+
+})
 
 
 // Route.get('/defaultUser', async (ctx) => {

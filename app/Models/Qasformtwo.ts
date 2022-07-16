@@ -4,11 +4,16 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 export default class Qasformtwo extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+
+  @column()
+  public invoice_table_id:Number
+
 @column()
 public  qas_form_one_id:Number
 @column()
 public  supplier_name:String
-
+@column()
+public invoice_client_id:String
 @column()
 public  rmcode:String
 @column()

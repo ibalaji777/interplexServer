@@ -7,6 +7,10 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.integer('operator_id').nullable()//user id only operator
+      table.integer('invoice_table_id').nullable()
+
+      table.string('invoice_client_id').nullable()
+
       table.string('supplier_name').nullable()
       table.string('invoice_no').nullable()
       table.date('invoice_date').nullable()
@@ -22,6 +26,7 @@ export default class extends BaseSchema {
       table.string('form_format').nullable()
       table.string('comment').nullable()
       table.date('duedate').nullable()
+      table.specificType('qasformtwo','json ARRAY').nullable()
       table.specificType('observation_print_view','json ARRAY').nullable()
       table.specificType('observation_format','json ARRAY').nullable()
       table.specificType('header_format','json ARRAY').nullable()

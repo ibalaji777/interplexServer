@@ -6,6 +6,14 @@ export default class Qasformone extends BaseModel {
   public id: number
   @column()
   public operator_id:Number
+
+  @column()
+  public invoice_client_id:String
+
+
+  @column()
+  public invoice_table_id:Number
+
   @column()
   public supplier_name:String
   @column()
