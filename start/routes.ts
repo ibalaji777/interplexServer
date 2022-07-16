@@ -23,6 +23,7 @@ import AssurancemediasController from 'App/Controllers/Http/AssurancemediasContr
 import BranchesController from 'App/Controllers/Http/BranchesController'
 import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsController'
 import MasterproductsController from 'App/Controllers/Http/MasterproductsController'
+import Qasform2configsController from 'App/Controllers/Http/Qasform2configsController'
 import QasformonesController from 'App/Controllers/Http/QasformonesController'
 import QasformtwosController from 'App/Controllers/Http/QasformtwosController'
 import UnitsController from 'App/Controllers/Http/UnitsController'
@@ -147,8 +148,17 @@ Route.get('/readheaderconfig', async (ctx) => {
 Route.post('/headerconfig/update', async (ctx) => {
   return new HeaderconfigsController().updateHeaderConfig(ctx)
 })
+Route.get('/readqasform2config', async (ctx) => {
+  return new Qasform2configsController().readQasForm2Config(ctx)
+})
 
+Route.post('/headerqasform2/update', async (ctx) => {
+  return new Qasform2configsController().updateQasForm2Config(ctx)
+})
 
+Route.post('/addInvoices', async (ctx) => {
+  return new QasformonesController().addInvoices(ctx)
+})
 
 // Route.get('/defaultUser', async (ctx) => {
 //  return new UsersController().defaultUser(ctx)

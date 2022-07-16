@@ -14,7 +14,7 @@ export default class extends BaseSchema {
       table.double('qty').nullable()
       table.string('grn_no').nullable()
       table.string('grn_date').nullable()
-      table.string('error_status').nullable()
+      table.boolean('error_status').nullable()
       table.string('batch_no').nullable()
       table.string('coil').nullable()
       table.string('coil_weight').nullable()

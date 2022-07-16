@@ -13,7 +13,7 @@ export default class Qasformone extends BaseModel {
   @column()
   public invoice_date:Date
   @column()
-  public invoice_qty:String
+  public invoice_qty:Number
   @column()
   public ir:String
   @column()
@@ -27,7 +27,7 @@ export default class Qasformone extends BaseModel {
   @column()
   public rm:String
   @column()
-  public received_qty:String
+  public received_qty:Number
   @column()
   public product_name:String
   @column()
@@ -37,12 +37,11 @@ export default class Qasformone extends BaseModel {
   @column()
   public duedate:Date
   @column()
-  public observation_print_view:JSON
-
+  public observation_print_view
   @column()
-  public observation_format:JSON
+  public observation_format
   @column()
-  public header_format:JSON
+  public header_format
   @column()
   public remarks:String
   @column()

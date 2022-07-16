@@ -3,7 +3,9 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Qasform2config extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id: String
+@column()
+public config//:Array<JSON>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

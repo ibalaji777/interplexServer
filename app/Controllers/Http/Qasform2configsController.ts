@@ -1,3 +1,165 @@
-// import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Qasform2config from 'App/Models/Qasform2config';
 
-export default class Qasform2configsController {}
+export default class Qasform2configsController {
+
+  public async  readQasForm2Config(ctx: HttpContextContract/*unresolved*/) {
+
+
+    var checkHeaderConfig=await Qasform2config.query().where('id','config').first()
+
+    if(!checkHeaderConfig){
+await Qasform2config.create({
+  id:'config',
+  config:[
+
+    {
+    label:'Coil # Batch No',//input field label
+    name:'batch_no',//column name
+    value:'',//default value
+    show:true,
+    map:'BATCH',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'',
+    validation:false,
+    rule:'',
+
+  },
+  {
+    label:'Sup #(Lot NO)',//input field label
+    name:'lot_no',//column name
+    value:'',//default value
+    show:true,
+    map:'PONO',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'',
+    validation:false,
+    rule:'',
+
+  },
+  {
+    label:'Width ',//input field label
+    name:'width',//column name
+    value:'',//default value
+    show:true,
+    map:'QTY',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'',
+    validation:false,
+    rule:'',
+
+  },
+  {
+    label:'Width One',//input field label
+    name:'width_one',//column name
+    value:'',//default value
+    show:true,
+    map:'',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'',
+    validation:false,
+    rule:'',
+
+  },
+  {
+    label:'Width Two',//input field label
+    name:'width_two',//column name
+    value:'',//default value
+    show:true,
+    map:'',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'',
+    validation:false,
+    rule:'',
+
+  },		{
+    label:'Thick One',//input field label
+    name:'thick_one',//column name
+    value:'',//default value
+    show:true,
+    map:'',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'',
+    validation:false,
+    rule:'',
+
+  },
+  {
+    label:'Thick Two',//input field label
+    name:'thick_two',//column name
+    value:'',//default value
+    show:true,
+    map:'',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'',
+    validation:false,
+    rule:'',
+
+  }
+  ,
+  {
+    label:'Validation',//input field label
+    name:'validation',//column name
+    value:'',//default value
+    show:false,
+    map:'',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'For Overall Verification from qasform1',
+    validation:false,
+    rule:'width_sup_one <= width_one <= width_sup_two',
+
+  },
+
+
+  {
+    label:'Indicator(Error)',//input field label
+    name:'error_status',//column name
+    value:false,//default value //false(error) or true(no error)
+    show:false,
+    map:'',
+    mapFrom:'header',//header or product
+    default:true,
+    note:'PreDefined configuration,No need to change',
+    validation:false,
+    rule:'',
+
+  },
+]
+}
+)
+    }
+
+       var config =await Qasform2config.query().where('id','config').first()||{};
+
+       return config['config']
+      }
+
+
+    public async updateQasForm2Config(ctx:HttpContextContract){
+
+      const {
+        config=[]
+      }=ctx.request.all();
+
+      // return config;
+      var updateConfig=await Qasform2config.query().where('id','config').update({config})
+
+      if(updateConfig){
+        return ctx.response.send({
+          successStatus:true
+        })
+      }
+      return ctx.response.send({
+        successStatus:false
+      })
+    }
+
+}
