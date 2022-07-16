@@ -4,43 +4,72 @@ import Qasformtwo from "App/Models/Qasformtwo";
 import Application from '@ioc:Adonis/Core/Application'
 import Invoice from "App/Models/Invoice";
 import Database from "@ioc:Adonis/Lucid/Database";
-
+import { v4 as uuidv4 } from 'uuid';
+import Qasformonemedia from "App/Models/Qasformonemedia";
 export default class QasformonesController {
 
   public async invoiceUpload(ctx:HttpContextContract){
   // Access file
-//   const coverImage = ctx.request.file('file', {
-//     extnames: ['jpg', 'png', 'jpeg'],
-//     size: '3mb'
-//   })
-// console.log(coverImage)
+  const coverImage = ctx.request.file('file', {
+    extnames: ['jpg', 'png', 'jpeg'],
+    size: '3mb'
+  })
+console.log(coverImage)
+const {
+  invoice_client_id='',
+  invoice_table_id=0,
+  invoice_no='',
+  file_type=''
+
+
+
+}=ctx.request.all()
+var uuid=uuidv4()
   // Check for errors
   // if (coverImage.hasErrors()) {
   //   return coverImage.errors()
   // }
 
   // Move to uploads directory
+Qasformonemedia.create({
+
+  invoice_table_id,
+  invoice_client_id,
+  invoice_no,
+  ext:coverImage?.extname,
+  name:uuid,
+  full_name:uuid+'.'+coverImage?.extname,
+file_type
+})
+
+  await coverImage?.move(Application.publicPath('uploads'),{
+    name:uuid+'.'+coverImage?.extname,
+
+  })
+
+//   const images = ctx.request.files('file')
+//   // await images[0].move('uploads')
+// console.log(Application.publicPath('uploads'))
+//   for (let image of images) {
+// var uuid=uuidv4()
+//     // image.clientName="test.jpeg"
+//     console.log("Ext",image.extname)
+//     console.log("file",image.fileName)
+//     console.log("path",image.filePath)
+//     console.log("client name",image.clientName)
+//     console.log("field name",image.fieldName)
+//     console.log("size",image.size)
+//     console.log("temp path",image.tmpPath)
+//     // console.log("temp path",image.)
 
 
-  // await coverImage.move('uploads')
 
-  const images = ctx.request.files('file')
-  // await images[0].move('uploads')
-console.log(Application.publicPath('uploads'))
-  for (let image of images) {
 
-    image.clientName="test.jpeg"
-    console.log("Ext",image.extname)
-    console.log("file",image.fileName)
-    console.log("path",image.filePath)
-    console.log("client name",image.clientName)
-    console.log("field name",image.fieldName)
-    console.log("size",image.size)
-    console.log("temp path",image.tmpPath)
-    // console.log("temp path",image.)
+//     await image.move(Application.publicPath('uploads'),{
+//       name:uuid+'.'+image.extname,
 
-    await image.move(Application.publicPath('uploads'))
-  }
+//     })
+  // }
 }
 
   public async addInvoices(ctx:HttpContextContract){
