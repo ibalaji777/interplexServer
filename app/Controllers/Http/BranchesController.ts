@@ -20,7 +20,7 @@ var defaultValue=[
     }
   ]
 
-//  await Branch.fetchOrCreateMany('name', defaultValue)
+ await Branch.fetchOrCreateMany('name', defaultValue)
 
    return await Branch.all();
 

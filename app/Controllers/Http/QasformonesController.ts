@@ -8,11 +8,180 @@ import { v4 as uuidv4 } from 'uuid';
 import Qasformonemedia from "App/Models/Qasformonemedia";
 export default class QasformonesController {
 
+  public async  invoiceImageDelete(ctx:HttpContextContract){
+
+
+    var id=ctx.request.input('id')
+var result=   await Qasformonemedia.query().where('id',id).delete()
+
+return result;
+  }
+  public async  updateQasFormTwo(ctx: HttpContextContract) {
+
+    var qasFormTwo=ctx.request.input('qasFormTwo')
+    for(var qasfromtwoIndex in qasFormTwo){
+    const    {
+id=0,
+      qty=0,
+      error_status=false,
+      batch_no='',
+      coil='',
+      coil_weight=0,
+      width_one='',
+      width_two='',
+      thickness_one='',
+      thickness_two='',
+      lot_no='',
+      validation='',
+
+
+    }=qasFormTwo[qasfromtwoIndex]
+  var qas=   await Qasformtwo
+    .query()
+    .where('id', id)
+    .update({
+      qty,
+      error_status,
+      batch_no,
+      coil,
+      coil_weight,
+      width_one,
+      width_two,
+      thickness_one,
+      thickness_two,
+      lot_no,
+      validation,
+
+     })
+    }
+     return qas;
+  }
+
+
+  public async  updateQasFormOne(ctx: HttpContextContract) {
+
+    const    {
+      id=0,
+      operator_id=0,
+      supplier_name='',
+      invoice_table_id=0,
+      invoice_client_id="",
+      invoice_no='',
+      invoice_date=new Date(),
+      invoice_qty=0,
+      ir='',
+      grn_no='',
+      grn_date=new Date(),
+      rmcode='',
+      eds='',
+      rm='',
+      received_qty=0,
+      product_name='',
+      form_format='',
+      comment='',
+      duedate=new Date(),
+      observation_print_view=[],
+      observation_format=[],
+      header_format=[],
+      remarks='',
+      approved_by=0,
+      skiplevel_status=false,
+      roletype='',
+      date=new Date(),
+
+
+    }=ctx.request.all()
+  var qas=   await Qasformone
+    .query()
+    .where('id', id)
+    .update({
+      invoice_table_id,
+      operator_id,
+      product_name,
+      supplier_name,
+      invoice_client_id,
+      rmcode,
+      eds,
+      rm,
+      form_format,
+      comment,
+      invoice_no,
+      invoice_date,
+      invoice_qty:parseFloat(invoice_qty)||0,
+      ir,
+      grn_no,
+      grn_date,
+      received_qty:parseFloat(received_qty)||0,
+      duedate,
+      observation_print_view,
+      observation_format,
+      header_format,
+      remarks,
+      approved_by,
+      skiplevel_status,
+      roletype,
+     })
+
+     return qas;
+  }
+public async getQasFormOneList(ctx:HttpContextContract)
+{
+//find date with to get better performnce
+return await Qasformone.all()
+}
+
+public async getQasSingleForm(ctx:HttpContextContract)
+{
+
+  var invoice_table_id=ctx.request.input('invoice_table_id')
+console.log("invoice table id",invoice_table_id)
+  return {
+
+    invoice:{
+qasFormOne:await Qasformone.query().where('invoice_table_id',invoice_table_id).first(),
+qasFormTwo:await Qasformtwo.query().where('invoice_table_id',invoice_table_id),
+gallery:await Qasformonemedia.query().where('invoice_table_id',invoice_table_id)
+
+    }
+
+
+  }
+
+
+}
+public async checkProductsBatch(ctx:HttpContextContract)
+{
+var products=ctx.request.input('products')
+
+var productsResult=[];
+for(var productIndex in products){
+
+ products[productIndex]['isExist']=await this.productBatchCheck(ctx,products[productIndex].batch_no)
+
+ productsResult.push(products[productIndex])
+}
+
+return ctx.response.send(products)
+
+}
+
+  public async  productBatchCheck(ctx:HttpContextContract,batch_no){
+
+
+    // var batch_no=ctx.request.input('batch_no')||''
+var  check=await Qasformtwo.query().where('batch_no',batch_no).first();
+
+if(check) return true;
+return false;
+
+
+  }
+
   public async invoiceUpload(ctx:HttpContextContract){
   // Access file
   const coverImage = ctx.request.file('file', {
     extnames: ['jpg', 'png', 'jpeg'],
-    size: '3mb'
+    size: '200mb'
   })
 console.log(coverImage)
 const {
@@ -31,7 +200,9 @@ var uuid=uuidv4()
   // }
 
   // Move to uploads directory
-Qasformonemedia.create({
+
+
+  Qasformonemedia.create({
 
   invoice_table_id,
   invoice_client_id,
@@ -77,6 +248,7 @@ file_type
     var invoices=ctx.request.input('invoices')
 var result=[];
 var invoiceTable={id:0};
+
     // return invoices;
 for(var invoiceIndex in invoices){
 

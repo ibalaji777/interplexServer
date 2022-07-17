@@ -90,6 +90,9 @@ Route.get('/readproducts', async (ctx) => {
   return new MasterproductsController().getBranchProducts(ctx)
 })
 
+
+
+
 // Route.post('/user/create', async (ctx) => {
 //   return new UsersController().createUser(ctx)
 // })
@@ -156,6 +159,15 @@ Route.post('/headerqasform2/update', async (ctx) => {
   return new Qasform2configsController().updateQasForm2Config(ctx)
 })
 
+// Route.post('/productbatch/check', async (ctx) => {
+//   return new QasformonesController().productBatchCheck(ctx)
+// })
+
+Route.post('/checkproductsbatch', async (ctx) => {
+  return new QasformonesController().checkProductsBatch(ctx)
+})
+
+
 Route.post('/addInvoices', async (ctx) => {
   return new QasformonesController().addInvoices(ctx)
 })
@@ -170,6 +182,34 @@ Route.get('/getelement', async (ctx) => {
 
 })
 
+
+Route.get('/readqasformonelist', async (ctx) => {
+  return new QasformonesController().getQasFormOneList(ctx)
+
+ })
+ Route.post('/readqasformonesingle', async (ctx) => {
+  return new QasformonesController().getQasSingleForm(ctx)
+
+ })
+
+ Route.post('/qasformone/update', async (ctx) => {
+  return new QasformonesController().updateQasFormOne(ctx)
+
+ })
+
+ Route.post('/qasformtwo/update', async (ctx) => {
+  return new QasformonesController().updateQasFormTwo(ctx)
+
+ })
+
+ Route.post('/media/delete', async (ctx) => {
+  return new QasformonesController().invoiceImageDelete(ctx)
+
+ })
+
+
+
+// public async getelement(ctx:HttpContextContract){
 
 // Route.get('/defaultUser', async (ctx) => {
 //  return new UsersController().defaultUser(ctx)
