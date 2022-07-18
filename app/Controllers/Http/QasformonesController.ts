@@ -6,6 +6,9 @@ import Invoice from "App/Models/Invoice";
 import Database from "@ioc:Adonis/Lucid/Database";
 import { v4 as uuidv4 } from 'uuid';
 import Qasformonemedia from "App/Models/Qasformonemedia";
+import moment from 'moment'
+import User from "App/Models/User";
+
 export default class QasformonesController {
 
   public async  invoiceImageDelete(ctx:HttpContextContract){
@@ -16,6 +19,44 @@ var result=   await Qasformonemedia.query().where('id',id).delete()
 
 return result;
   }
+
+public async getOperatorQasFormList(ctx:HttpContextContract)
+{
+
+  var operator_id=ctx.request.input('id')
+  var from_date=ctx.request.input('from_date')
+  var to_date=ctx.request.input('to_date')
+  console.log('id',operator_id,from_date,to_date)
+
+  return await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","app.name as approver_name")
+   .where('qasformones.operator_id',operator_id)
+   .andWhere('qasformones.date','>=',from_date)
+   .andWhere('qasformones.date','<=',to_date)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as app','users.id','=','qasformones.approved_by')
+
+//   // return await User.all()
+//  return  await Qasformone.query()
+//  .from('qasformones')
+//   // .select("qasformones.*","users.name as operator_name","users.branch as operator_branch")
+//   .select("users.*")
+//   .where('qasformones.operator_id',operator_id)
+//   .andWhere('qasformones.date','>=',from_date)
+//   .andWhere('qasformones.date','<=',to_date)
+//   .leftJoin('users','users.id','=','qasformones.operator_id')
+
+//   return await Database
+//   .from('qasformones')
+//    .select("qasformones.*","users.name as operator_name","users.branch as operator_branch")
+//    .where('qasformones.operator_id',operator_id)
+//    .andWhere('qasformones.date','>=',from_date)
+//    .andWhere('qasformones.date','<=',to_date)
+//    .leftJoin('users','users.id','=','qasformones.operator_id')
+
+
+}
   public async  updateQasFormTwo(ctx: HttpContextContract) {
 
     var qasFormTwo=ctx.request.input('qasFormTwo')
@@ -67,11 +108,11 @@ id=0,
       invoice_table_id=0,
       invoice_client_id="",
       invoice_no='',
-      invoice_date=new Date(),
+      invoice_date=moment().format("YYYY-MM-DD"),
       invoice_qty=0,
       ir='',
       grn_no='',
-      grn_date=new Date(),
+      grn_date=moment().format("YYYY-MM-DD"),
       rmcode='',
       eds='',
       rm='',
@@ -79,7 +120,7 @@ id=0,
       product_name='',
       form_format='',
       comment='',
-      duedate=new Date(),
+      duedate=moment().format("YYYY-MM-DD"),
       observation_print_view=[],
       observation_format=[],
       header_format=[],
@@ -87,7 +128,7 @@ id=0,
       approved_by=0,
       skiplevel_status=false,
       roletype='',
-      date=new Date(),
+      date=moment().format("YYYY-MM-DD"),
 
 
     }=ctx.request.all()
@@ -258,9 +299,9 @@ var getInvoice=invoices[invoiceIndex]
 invoice_client_id:getInvoice.invoice_client_id||'',
 supplier_name:getInvoice.supplier_name||'',
 invoice_no:getInvoice.invoice_no||'',
-invoice_date:getInvoice.invoice_date||new Date(),
+invoice_date:getInvoice.invoice_date||moment().format("YYYY-MM-DD"),
 grn_no:getInvoice.grn_no||'',
-grn_date:getInvoice.grn_date||new Date(),
+grn_date:getInvoice.grn_date||moment().format("YYYY-MM-DD"),
 operator_id:getInvoice.operator_id||0
 
 
@@ -283,11 +324,11 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
       supplier_name='',
       invoice_client_id="",
       invoice_no='',
-      invoice_date=new Date(),
+      invoice_date=moment().format("YYYY-MM-DD"),
       invoice_qty=0,
       ir='',
       grn_no='',
-      grn_date=new Date(),
+      grn_date=moment().format("YYYY-MM-DD"),
       rmcode='',
       eds='',
       rm='',
@@ -295,7 +336,7 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
       product_name='',
       form_format='',
       comment='',
-      duedate=new Date(),
+      duedate=moment().format("YYYY-MM-DD"),
       observation_print_view=[],
       observation_format=[],
       header_format=[],
@@ -303,7 +344,8 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
       approved_by=0,
       skiplevel_status=false,
       roletype='',
-      date=new Date(),
+      status='pending',
+      date=moment().format("YYYY-MM-DD"),
 
         }=qasFormOneArray[qasForm1Index]
 
@@ -334,8 +376,9 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
     remarks,
     approved_by,
     skiplevel_status,
+    status,
     roletype,
-    // date
+    date
 
   })
 var qasform2Products=qasFormOneArray[qasForm1Index].qasForm2New
@@ -363,7 +406,7 @@ var {
   thickness_two='',
   lot_no='',
   validation='',
-  // date=new Date(),
+  // date=moment().format("YYYY-MM-DD"),
 
 }=qasform2Products[qasform2Productindex]
 
@@ -389,7 +432,7 @@ await Qasformtwo.create({
     thickness_two,
     lot_no,
     validation,
-    date:product['date'],
+    date:moment().format("YYYY-MM-DD")///product['date'],
 
    })
 }
@@ -415,11 +458,11 @@ return ctx.response.send({
       operator_id=0,
       supplier_name='',
       invoice_no='',
-      invoice_date=new Date(),
+      invoice_date=moment().format("YYYY-MM-DD"),
       invoice_qty=0,
       ir='',
       grn_no='',
-      grn_date=new Date(),
+      grn_date=moment().format("YYYY-MM-DD"),
       rmcode='',
       eds='',
       rm='',
@@ -427,7 +470,7 @@ return ctx.response.send({
       product_name='',
       form_format='',
       comment='',
-      duedate=new Date(),
+      duedate=moment().format("YYYY-MM-DD"),
       observation_print_view=[],
       observation_format=[],
       header_format=[],
@@ -435,7 +478,7 @@ return ctx.response.send({
       approved_by=0,
       skiplevel_status=false,
       roletype='',
-      date=new Date(),
+      date=moment().format("YYYY-MM-DD"),
 
         }=ctx.request.all()
 

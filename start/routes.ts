@@ -207,6 +207,11 @@ Route.get('/readqasformonelist', async (ctx) => {
 
  })
 
+ Route.post('/readoperatorforms', async (ctx) => {
+  return new QasformonesController().getOperatorQasFormList(ctx)
+
+ })
+
 
 
 // public async getelement(ctx:HttpContextContract){
