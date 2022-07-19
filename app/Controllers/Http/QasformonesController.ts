@@ -20,6 +20,16 @@ var result=   await Qasformonemedia.query().where('id',id).delete()
 return result;
   }
 
+
+  public async qasFormUpdateStatus(ctx:HttpContextContract){
+
+var id=ctx.request.input('id')
+var status=ctx.request.input('status')
+var result=await Qasformone.query().where('id',id).update('status',status)
+
+return result;
+
+  }
 public async getOperatorQasFormList(ctx:HttpContextContract)
 {
 
@@ -30,30 +40,21 @@ public async getOperatorQasFormList(ctx:HttpContextContract)
 
   return await Database
   .from('qasformones')
-   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","app.name as approver_name")
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
    .where('qasformones.operator_id',operator_id)
    .andWhere('qasformones.date','>=',from_date)
    .andWhere('qasformones.date','<=',to_date)
    .leftJoin('users','users.id','=','qasformones.operator_id')
-   .leftJoin('users as app','users.id','=','qasformones.approved_by')
-
-//   // return await User.all()
-//  return  await Qasformone.query()
-//  .from('qasformones')
-//   // .select("qasformones.*","users.name as operator_name","users.branch as operator_branch")
-//   .select("users.*")
-//   .where('qasformones.operator_id',operator_id)
-//   .andWhere('qasformones.date','>=',from_date)
-//   .andWhere('qasformones.date','<=',to_date)
-//   .leftJoin('users','users.id','=','qasformones.operator_id')
-
-//   return await Database
-//   .from('qasformones')
-//    .select("qasformones.*","users.name as operator_name","users.branch as operator_branch")
-//    .where('qasformones.operator_id',operator_id)
-//    .andWhere('qasformones.date','>=',from_date)
-//    .andWhere('qasformones.date','<=',to_date)
-//    .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
+//--------------------------using---------------------------
+  // return await Database
+  // .from('qasformones')
+  //  .select("qasformones.*","users.name as operator_name","users.branch as operator_branch")
+  //  .where('qasformones.operator_id',operator_id)
+  //  .andWhere('qasformones.date','>=',from_date)
+  //  .andWhere('qasformones.date','<=',to_date)
+  //  .leftJoin('users','users.id','=','qasformones.operator_id')
+//--------------------------using---------------------------
 
 
 }
@@ -176,10 +177,20 @@ public async getQasSingleForm(ctx:HttpContextContract)
 
   var invoice_table_id=ctx.request.input('invoice_table_id')
 console.log("invoice table id",invoice_table_id)
-  return {
+
+
+var qasFormOne=await Database
+.from('qasformones as qas')
+.select('qas.*',
+'p.observation_print_view as observation_print_view')
+.where('invoice_table_id',invoice_table_id)
+.leftJoin('masterproducts as p','p.rmcode','=','qas.rmcode')
+.first()
+return {
 
     invoice:{
-qasFormOne:await Qasformone.query().where('invoice_table_id',invoice_table_id).first(),
+      qasFormOne,
+// qasFormOne:await Qasformone.query().where('invoice_table_id',invoice_table_id).first(),
 qasFormTwo:await Qasformtwo.query().where('invoice_table_id',invoice_table_id),
 gallery:await Qasformonemedia.query().where('invoice_table_id',invoice_table_id)
 

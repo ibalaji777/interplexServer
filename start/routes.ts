@@ -21,6 +21,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 import AssurancemediasController from 'App/Controllers/Http/AssurancemediasController'
 import BranchesController from 'App/Controllers/Http/BranchesController'
+import ConfigProductFormatsController from 'App/Controllers/Http/ConfigProductFormatsController'
 import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsController'
 import MasterproductsController from 'App/Controllers/Http/MasterproductsController'
 import Qasform2configsController from 'App/Controllers/Http/Qasform2configsController'
@@ -29,6 +30,7 @@ import QasformtwosController from 'App/Controllers/Http/QasformtwosController'
 import UnitsController from 'App/Controllers/Http/UnitsController'
 import UploadtypesController from 'App/Controllers/Http/UploadtypesController'
 import UsersController from 'App/Controllers/Http/UsersController'
+import ConfigProductFormat from 'App/Models/ConfigProductFormat'
 
 //branches
 
@@ -209,6 +211,22 @@ Route.get('/readqasformonelist', async (ctx) => {
 
  Route.post('/readoperatorforms', async (ctx) => {
   return new QasformonesController().getOperatorQasFormList(ctx)
+
+ })
+
+ Route.post('/qasformstatus/update', async (ctx) => {
+  return new QasformonesController().qasFormUpdateStatus(ctx)
+
+ })
+
+
+ Route.post('/productformat/update', async (ctx) => {
+  return new ConfigProductFormatsController().updateConfig(ctx)
+
+ })
+
+ Route.get('/productformat/read', async (ctx) => {
+  return new ConfigProductFormatsController().getProductConfig(ctx)
 
  })
 

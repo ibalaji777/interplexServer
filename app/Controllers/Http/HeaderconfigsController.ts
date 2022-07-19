@@ -17,7 +17,7 @@ await Headerconfig.create({
 			name:'supplier_name',//column name
 			value:'',//default value
 			show:true,
-			map:'',
+			map:'Vendor Name',
 			mapFrom:'header',//header or product
 			default:true,
 			note:''
@@ -27,8 +27,8 @@ await Headerconfig.create({
 			name:'product_name',//column name
 			value:'',//default value
 			show:true,
-			map:'',
-			mapFrom:'header',//header or product
+			map:'product_name',
+			mapFrom:'product',//header or product
 			default:true,
 			note:''
 
@@ -40,7 +40,7 @@ await Headerconfig.create({
 			name:'invoice_no',//column name
 			value:'',//default value
 			show:true,
-			map:'',
+			map:'invoice_no',
 			mapFrom:'header',//header or product
 			default:true,
 			note:''
@@ -73,8 +73,8 @@ await Headerconfig.create({
 			name:'ir',//column name
 			value:'',//default value
 			show:true,
-			map:'',
-			mapFrom:'header',//header or product
+			map:'ir',
+			mapFrom:'product',//header or product
 			default:true,
 			note:''
 		},
@@ -83,7 +83,7 @@ await Headerconfig.create({
 			name:'grn_no',//column name
 			value:'',//default value
 			show:true,
-			map:'',
+			map:'grn_no',
 			mapFrom:'header',//header or product
 			default:true,
 			note:''
@@ -104,8 +104,8 @@ await Headerconfig.create({
 			name:'rmcode',//column name
 			value:'',//default value
 			show:true,
-			map:'',
-			mapFrom:'header',//header or product
+			map:'rmcode',
+			mapFrom:'product',//header or product
 			default:true,
 			note:''
 		},		{
@@ -113,8 +113,8 @@ await Headerconfig.create({
 			name:'eds',//column name
 			value:'',//default value
 			show:true,
-			map:'',
-			mapFrom:'header',//header or product
+			map:'eds',
+			mapFrom:'product',//header or product
 			default:true,
 			note:''
 		},		{
@@ -122,8 +122,8 @@ await Headerconfig.create({
 			name:'rm',//column name
 			value:'',//default value
 			show:true,
-			map:'',
-			mapFrom:'header',//header or product
+			map:'rm',
+			mapFrom:'product',//header or product
 			default:true,
 			note:''
 		},		{
@@ -131,7 +131,7 @@ await Headerconfig.create({
 			name:'received_qty',//column name
 			value:'',//default value
 			show:true,
-			map:'',
+			map:'invoiceQty',
 			mapFrom:'header',//header or product
 			default:true,
 			note:'No Need to Map'
