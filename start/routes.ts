@@ -218,6 +218,10 @@ Route.get('/readqasformonelist', async (ctx) => {
   return new QasformonesController().qasFormUpdateStatus(ctx)
 
  })
+ Route.post('/qasformsbulkstatus/update', async (ctx) => {
+  return new QasformonesController().qasFormBulkUpdateStatus(ctx)
+
+ })
 
 
  Route.post('/productformat/update', async (ctx) => {
@@ -228,6 +232,11 @@ Route.get('/readqasformonelist', async (ctx) => {
  Route.get('/productformat/read', async (ctx) => {
   return new ConfigProductFormatsController().getProductConfig(ctx)
 
+ })
+
+ Route.post('/getqasformnneuser',async(ctx)=>{
+
+return new QasformonesController().readQasformOneUser(ctx)
  })
 
 

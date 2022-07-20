@@ -8,8 +8,32 @@ import { v4 as uuidv4 } from 'uuid';
 import Qasformonemedia from "App/Models/Qasformonemedia";
 import moment from 'moment'
 import User from "App/Models/User";
+import { HttpContext } from "@adonisjs/core/build/standalone";
+import Irnum from "App/Models/Irnum";
 
 export default class QasformonesController {
+
+public async irNum(branch){
+
+
+// await  Database.rawQuery(`
+// UPDATE totals
+// SET total = total + 1
+// WHERE name = 'bill'`)
+if(await Database.from('irnum').where('id',branch)){
+
+return   await Irnum.create({
+    id:branch,
+    count:1
+  })
+
+}
+
+return await Database.from('irnum').select('count')
+.increment('count',1).where('id',branch)
+
+
+}
 
   public async  invoiceImageDelete(ctx:HttpContextContract){
 
@@ -20,7 +44,41 @@ var result=   await Qasformonemedia.query().where('id',id).delete()
 return result;
   }
 
+public async qasFormBulkUpdateStatus(cts:HttpContextContract){
 
+// var qas=[{id:1,status},{id:2,status}]
+
+
+
+
+
+}
+
+public async readQasformOneUser(ctx:HttpContextContract){
+
+  var id=ctx.request.input('id')
+  var roletype=ctx.request.input('roletype')
+   var from_date=ctx.request.input('from_date')
+  var to_date=ctx.request.input('to_date')
+
+  if(roletype=='operator')
+  return await Qasformone.query().where('operator_id',id)
+  .andWhere('date','>=',from_date)
+  .andWhere('date','<=',to_date)
+else
+  return await Qasformone.query()
+.andWhere('date','>=',from_date)
+.andWhere('date','<=',to_date)
+
+
+}
+
+public async qasFormOneStatus(obj={id:0,status:''}){
+
+
+await Qasformone.query().where('id',obj.id).update('status',obj.status)
+
+}
   public async qasFormUpdateStatus(ctx:HttpContextContract){
 
 var id=ctx.request.input('id')
