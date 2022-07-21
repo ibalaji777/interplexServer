@@ -15,23 +15,26 @@ export default class QasformonesController {
 
 public async irNum(branch){
 
-
+var result={}
 // await  Database.rawQuery(`
 // UPDATE totals
 // SET total = total + 1
 // WHERE name = 'bill'`)
-if(await Database.from('irnum').where('id',branch)){
+if(!await Database.from('irnums').where('id',branch).first()){
 
-return   await Irnum.create({
+   await Irnum.create({
     id:branch,
     count:1
   })
-
+ result= await Database.from('irnums').where('id',branch).first()
+return result["count"];
 }
 
-return await Database.from('irnum').select('count')
-.increment('count',1).where('id',branch)
+ await Database.from('irnums')
+.increment('count',1).where('id',branch).first()
 
+result= await Database.from('irnums').where('id',branch).first()
+return result['count']
 
 }
 
@@ -61,14 +64,43 @@ public async readQasformOneUser(ctx:HttpContextContract){
    var from_date=ctx.request.input('from_date')
   var to_date=ctx.request.input('to_date')
 
+
+
+
+
   if(roletype=='operator')
-  return await Qasformone.query().where('operator_id',id)
-  .andWhere('date','>=',from_date)
-  .andWhere('date','<=',to_date)
+return  await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.operator_id',id)
+   .andWhere('qasformones.date','>=',from_date)
+   .andWhere('qasformones.date','<=',to_date)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
 else
-  return await Qasformone.query()
-.andWhere('date','>=',from_date)
-.andWhere('date','<=',to_date)
+return await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .andWhere('qasformones.date','>=',from_date)
+   .andWhere('qasformones.date','<=',to_date)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
+
+
+
+
+
+
+
+//   if(roletype=='operator')
+//   return await Qasformone.query()
+//   .where('operator_id',id)
+//   .andWhere('date','>=',from_date)
+//   .andWhere('date','<=',to_date)
+// else
+//   return await Qasformone.query()
+// .andWhere('date','>=',from_date)
+// .andWhere('date','<=',to_date)
 
 
 }
@@ -83,7 +115,9 @@ await Qasformone.query().where('id',obj.id).update('status',obj.status)
 
 var id=ctx.request.input('id')
 var status=ctx.request.input('status')
+var approved_by=ctx.request.input('approved_by');
 var result=await Qasformone.query().where('id',id).update('status',status)
+.update('approved_by',approved_by)
 
 return result;
 
@@ -240,14 +274,19 @@ console.log("invoice table id",invoice_table_id)
 var qasFormOne=await Database
 .from('qasformones as qas')
 .select('qas.*',
-'p.observation_print_view as observation_print_view')
+'p.observation_print_view as observation_print_view',
+'u.name as operator_name',
+'au.name as approver_name'
+)
 .where('invoice_table_id',invoice_table_id)
 .leftJoin('masterproducts as p','p.rmcode','=','qas.rmcode')
+.leftJoin('users as u','u.id','=','qas.operator_id')
+.leftJoin('users as au','au.id','=','qas.approved_by')
 .first()
 return {
 
     invoice:{
-      qasFormOne,
+qasFormOne,
 // qasFormOne:await Qasformone.query().where('invoice_table_id',invoice_table_id).first(),
 qasFormTwo:await Qasformtwo.query().where('invoice_table_id',invoice_table_id),
 gallery:await Qasformonemedia.query().where('invoice_table_id',invoice_table_id)
@@ -354,12 +393,14 @@ file_type
 }
 
   public async addInvoices(ctx:HttpContextContract){
-
-    var invoices=ctx.request.input('invoices')
+var $vm=this;
+var invoices=ctx.request.input('invoices')
 var result=[];
 var invoiceTable={id:0};
+var branch=ctx.request.headers()['branch']||''
+// console.log('branch ir num',await $vm.irNum(branch))
 
-    // return invoices;
+// return invoices;
 for(var invoiceIndex in invoices){
 
 var getInvoice=invoices[invoiceIndex]
@@ -387,7 +428,7 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
 
 
   for(var qasForm1Index in qasFormOneArray){
-
+var irNum=await $vm.irNum(branch);
     const    {
       operator_id=0,
       supplier_name='',
@@ -395,7 +436,7 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
       invoice_no='',
       invoice_date=moment().format("YYYY-MM-DD"),
       invoice_qty=0,
-      ir='',
+      ir=0,
       grn_no='',
       grn_date=moment().format("YYYY-MM-DD"),
       rmcode='',
@@ -411,9 +452,11 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
       header_format=[],
       remarks='',
       approved_by=0,
+      batch='',
       skiplevel_status=false,
       roletype='',
       status='pending',
+      notes='',
       date=moment().format("YYYY-MM-DD"),
 
         }=qasFormOneArray[qasForm1Index]
@@ -434,7 +477,7 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
     invoice_no,
     invoice_date,
     invoice_qty:parseFloat(invoice_qty)||0,
-    ir,
+    ir:irNum,
     grn_no,
     grn_date,
     received_qty:parseFloat(received_qty)||0,
@@ -447,6 +490,8 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
     skiplevel_status,
     status,
     roletype,
+    batch,
+    notes,
     date
 
   })

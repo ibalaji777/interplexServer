@@ -35,6 +35,11 @@ export default class extends BaseSchema {
       table.integer('approved_by').nullable()//user id approver or admin
       table.boolean('skiplevel_status').nullable()
       table.string('roletype').nullable()
+
+      table.string('batch').nullable()
+      table.string('branch').nullable()
+      table.string('notes').nullable()
+
       table.date('date').nullable()
 
 

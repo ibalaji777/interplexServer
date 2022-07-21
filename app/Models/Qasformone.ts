@@ -61,6 +61,13 @@ export default class Qasformone extends BaseModel {
   @column()
   public roletype:String
   @column()
+  public branch:String
+  @column()
+  public batch:String
+  @column()
+  public notes:String
+
+  @column()
   public date:Date
 
 
