@@ -15,6 +15,8 @@ public  supplier_name:String
 @column()
 public invoice_client_id:String
 @column()
+public  invoice_no:String
+@column()
 public  rmcode:String
 @column()
 public  eds:String
@@ -28,19 +30,19 @@ public  grn_date:Date
 public  error_status:boolean
 @column()
 public  batch_no:String
+// @column()
+// public  coil:String
 @column()
-public  coil:String
+public  weight:Number
 @column()
-public  coil_weight:String
+public  width_one:Number
 @column()
-public  width_one:String
-@column()
-public  width_two:String
+public  width_two:Number
 
 @column()
-public  thickness_one:String
+public  thickness_one:Number
 @column()
-public  thickness_two:String
+public  thickness_two:Number
 @column()
 public  lot_no:String
 @column()

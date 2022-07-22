@@ -40,8 +40,8 @@ await Qasform2config.create({
 
   },
   {
-    label:'Width ',//input field label
-    name:'width',//column name
+    label:'Weight in Kg',//input field label
+    name:'weight',//column name
     value:'',//default value
     show:true,
     map:'QTY',

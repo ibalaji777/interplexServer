@@ -33,12 +33,16 @@ export default class extends BaseSchema {
       table.string('remarks').nullable()
       table.string('status').nullable()//(approved or acceptedOnDeviation or ppap)
       table.integer('approved_by').nullable()//user id approver or admin
-      table.boolean('skiplevel_status').nullable()
+      table.boolean('skiplevel_status').defaultTo(false)
       table.string('roletype').nullable()
-
       table.string('batch').nullable()
       table.string('branch').nullable()
+
       table.string('notes').nullable()
+
+      table.string('skuid').nullable()
+      table.integer('sk_index').defaultTo(0)
+      table.string('sk_order').defaultTo(0)
 
       table.date('date').nullable()
 

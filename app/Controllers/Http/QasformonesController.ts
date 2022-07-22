@@ -151,16 +151,16 @@ public async getOperatorQasFormList(ctx:HttpContextContract)
 
 }
   public async  updateQasFormTwo(ctx: HttpContextContract) {
-
+//having doubt while update
     var qasFormTwo=ctx.request.input('qasFormTwo')
     for(var qasfromtwoIndex in qasFormTwo){
     const    {
 id=0,
-      qty=0,
+      // qty=0,
       error_status=false,
       batch_no='',
-      coil='',
-      coil_weight=0,
+      // coil='',
+      weight=0,
       width_one='',
       width_two='',
       thickness_one='',
@@ -174,11 +174,11 @@ id=0,
     .query()
     .where('id', id)
     .update({
-      qty,
+      // qty,
       error_status,
       batch_no,
-      coil,
-      coil_weight,
+      // coil,
+      weight,
       width_one,
       width_two,
       thickness_one,
@@ -457,6 +457,9 @@ var irNum=await $vm.irNum(branch);
       roletype='',
       status='pending',
       notes='',
+      skuid='',
+      sk_index=0,
+      sk_order='',
       date=moment().format("YYYY-MM-DD"),
 
         }=qasFormOneArray[qasForm1Index]
@@ -492,6 +495,9 @@ var irNum=await $vm.irNum(branch);
     roletype,
     batch,
     notes,
+    skuid,
+    sk_index,
+    sk_order,
     date
 
   })
@@ -503,21 +509,21 @@ for(var qasform2Productindex in qasform2Products)
 // console.log("product",product)
 
 var {
-  qas_form_one_id=0,
+  // qas_form_one_id=0,
   // invoice_client_id='',
   // rmcode='',
   // eds='',
   // supplier_name='',
-  qty=0,
+  // qty=0,
   // grn_date='',
   error_status=false,
   batch_no='',
-  coil='',
-  coil_weight='',
-  width_one='',
-  width_two='',
-  thickness_one='',
-  thickness_two='',
+  // coil='',
+  weight=0,
+  width_one=0,
+  width_two=0,
+  thickness_one=0,
+  thickness_two=0,
   lot_no='',
   validation='',
   // date=moment().format("YYYY-MM-DD"),
@@ -526,20 +532,47 @@ var {
 
 var qasform2=qasform2Products[qasform2Productindex];
 
+console.log({
+  invoice_table_id:invoiceTable.id,
+
+    qas_form_one_id:parseFloat(qasFormOneId)||0,
+    invoice_client_id:qasform2.invoice_client_id,
+    invoice_no:getInvoice.invoice_no||'',//
+    rmcode:getInvoice['rmcode'],
+    eds:getInvoice['eds'],
+    supplier_name:getInvoice['supplier_name'],
+    // qty:parseFloat(qty)||0,
+    grn_date:getInvoice['grn_date'],
+    grn_no:getInvoice['grn_no']||'',//
+    error_status,
+    batch_no,
+    // coil,
+    weight,//
+    width_one,
+    width_two,
+    thickness_one,
+    thickness_two,
+    lot_no,
+    validation,
+    date:moment().format("YYYY-MM-DD")///product['date'],
+
+   })
 await Qasformtwo.create({
   invoice_table_id:invoiceTable.id,
 
     qas_form_one_id:parseFloat(qasFormOneId)||0,
     invoice_client_id:qasform2.invoice_client_id,
-    rmcode:product['rmcode'],
-    eds:product['eds'],
-    supplier_name:product['supplier_name'],
-    qty:parseFloat(qty)||0,
-    grn_date:product['grn_date'],
+    invoice_no:getInvoice.invoice_no||'',//
+    rmcode:getInvoice['rmcode'],
+    eds:getInvoice['eds'],
+    supplier_name:getInvoice['supplier_name'],
+    // qty:parseFloat(qty)||0,
+    grn_date:getInvoice['grn_date'],
+    grn_no:getInvoice['grn_no']||'',//
     error_status,
     batch_no,
-    coil,
-    coil_weight,
+    // coil,
+    weight,//
     width_one,
     width_two,
     thickness_one,

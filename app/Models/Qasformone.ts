@@ -68,6 +68,17 @@ export default class Qasformone extends BaseModel {
   public notes:String
 
   @column()
+  public skuid:String
+  @column()
+  public sk_index:Number
+  @column()
+  public sk_order:String
+
+
+
+
+
+  @column()
   public date:Date
 
 
