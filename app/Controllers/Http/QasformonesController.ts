@@ -438,7 +438,7 @@ console.log('Gallery',invoices[invoiceIndex].gallery)
 
 
   for(var qasForm1Index in qasFormOneArray){
-var irNum=await $vm.irNum(branch);
+var irNum=core.prefixIRNum() +"-"+ await $vm.irNum(branch);
     const    {
       operator_id=0,
       supplier_name='',
@@ -474,7 +474,7 @@ var irNum=await $vm.irNum(branch);
 
         }=qasFormOneArray[qasForm1Index]
 
-
+//
         // console.log("before",qasFormOneArray[qasForm1Index])
   var qasformone= await Qasformone.create({
     invoice_table_id:invoiceTable.id,

@@ -1,5 +1,5 @@
 import User from "App/Models/User"
-
+import moment from "moment";
 
 export async function checkAdmin(ctx){
 return true;
@@ -27,3 +27,12 @@ export function number(value){
 if(onlyNumbers(value))  return parseFloat(value||0)
 return 0;
 }
+
+export const prefixIRNum = () => {
+  if(moment().format('M')>=6){
+
+    return "FY-"+moment().add(1,"years").format('YY')+"-"+moment().format("MM")
+
+  }
+  return "FY-"+moment().format("YY")+"-"+moment().format("MM")
+};
