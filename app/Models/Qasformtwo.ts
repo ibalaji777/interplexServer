@@ -40,9 +40,9 @@ public  width_one:Number
 public  width_two:Number
 
 @column()
-public  thickness_one:Number
+public  thick_one:Number
 @column()
-public  thickness_two:Number
+public  thick_two:Number
 @column()
 public  lot_no:String
 @column()

@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Qasformonemedia from "App/Models/Qasformonemedia";
 import moment from 'moment'
 import User from "App/Models/User";
+import * as core from './core'
 import { HttpContext } from "@adonisjs/core/build/standalone";
 import Irnum from "App/Models/Irnum";
 
@@ -153,6 +154,7 @@ public async getOperatorQasFormList(ctx:HttpContextContract)
   public async  updateQasFormTwo(ctx: HttpContextContract) {
 //having doubt while update
     var qasFormTwo=ctx.request.input('qasFormTwo')
+
     for(var qasfromtwoIndex in qasFormTwo){
     const    {
 id=0,
@@ -161,10 +163,10 @@ id=0,
       batch_no='',
       // coil='',
       weight=0,
-      width_one='',
-      width_two='',
-      thickness_one='',
-      thickness_two='',
+      width_one=0,
+      width_two=0,
+      thick_one=0,
+      thick_two=0,
       lot_no='',
       validation='',
 
@@ -178,11 +180,12 @@ id=0,
       error_status,
       batch_no,
       // coil,
-      weight,
-      width_one,
-      width_two,
-      thickness_one,
-      thickness_two,
+      weight:core.number(weight),//
+      width_one:core.number(width_one),
+      width_two:core.number(width_two),
+      thick_one:core.number(thick_one),
+      thick_two:core.number(thick_two),
+
       lot_no,
       validation,
 
@@ -221,10 +224,12 @@ id=0,
       approved_by=0,
       skiplevel_status=false,
       roletype='',
-      date=moment().format("YYYY-MM-DD"),
+      // date=moment().format("YYYY-MM-DD"),
 
 
     }=ctx.request.all()
+
+    // return ctx.request.all()
   var qas=   await Qasformone
     .query()
     .where('id', id)
@@ -256,7 +261,12 @@ id=0,
       roletype,
      })
 
-     return qas;
+  // var qas=   await Qasformone
+  //   .query()
+  //   .where('id', id)
+  //   .update("observation_format",observation_format)
+
+     return observation_format;
   }
 public async getQasFormOneList(ctx:HttpContextContract)
 {
@@ -522,8 +532,8 @@ var {
   weight=0,
   width_one=0,
   width_two=0,
-  thickness_one=0,
-  thickness_two=0,
+  thick_one=0,
+  thick_two=0,
   lot_no='',
   validation='',
   // date=moment().format("YYYY-MM-DD"),
@@ -532,7 +542,7 @@ var {
 
 var qasform2=qasform2Products[qasform2Productindex];
 
-console.log({
+var createQasFormTwo={
   invoice_table_id:invoiceTable.id,
 
     qas_form_one_id:parseFloat(qasFormOneId)||0,
@@ -547,41 +557,18 @@ console.log({
     error_status,
     batch_no,
     // coil,
-    weight,//
-    width_one,
-    width_two,
-    thickness_one,
-    thickness_two,
+    weight:core.number(weight),//
+    width_one:core.number(width_one),
+    width_two:core.number(width_two),
+    thick_one:core.number(thick_one),
+    thick_two:core.number(thick_two),
+
     lot_no,
     validation,
     date:moment().format("YYYY-MM-DD")///product['date'],
 
-   })
-await Qasformtwo.create({
-  invoice_table_id:invoiceTable.id,
-
-    qas_form_one_id:parseFloat(qasFormOneId)||0,
-    invoice_client_id:qasform2.invoice_client_id,
-    invoice_no:getInvoice.invoice_no||'',//
-    rmcode:getInvoice['rmcode'],
-    eds:getInvoice['eds'],
-    supplier_name:getInvoice['supplier_name'],
-    // qty:parseFloat(qty)||0,
-    grn_date:getInvoice['grn_date'],
-    grn_no:getInvoice['grn_no']||'',//
-    error_status,
-    batch_no,
-    // coil,
-    weight,//
-    width_one,
-    width_two,
-    thickness_one,
-    thickness_two,
-    lot_no,
-    validation,
-    date:moment().format("YYYY-MM-DD")///product['date'],
-
-   })
+   }
+await Qasformtwo.create(createQasFormTwo)
 }
 
 
