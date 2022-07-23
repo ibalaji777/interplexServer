@@ -72,6 +72,11 @@ Route.get('/user/test', async (ctx) => {
 
 
 // *********************qasformone************************
+
+Route.post('/product/find', async (ctx) => {
+  return new MasterproductsController().findProducts(ctx)
+})
+
 Route.get('/product/test', async (ctx) => {
   return new MasterproductsController().defaultProduct(ctx)
 })

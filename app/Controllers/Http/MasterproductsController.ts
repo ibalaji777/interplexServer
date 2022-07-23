@@ -5,6 +5,18 @@ import Masterproduct from "App/Models/Masterproduct";
 import * as core from './core'
 export default class MasterproductsController {
 
+public async findProducts(ctx:HttpContextContract){
+
+
+  var rmcode=ctx.request.input('rmcode')
+
+  return ctx.response.send(await Masterproduct.query().where('rmcode',rmcode);)
+
+
+
+
+
+}
 public async  updateProduct(ctx:HttpContextContract){
 
   const    {
