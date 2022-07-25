@@ -8,6 +8,8 @@ import { v4 as uuidv4 } from 'uuid';
 import Qasformonemedia from "App/Models/Qasformonemedia";
 import moment from 'moment'
 import User from "App/Models/User";
+import Ws from 'App/Services/Ws'
+
 import * as core from './core'
 import { HttpContext } from "@adonisjs/core/build/standalone";
 import Irnum from "App/Models/Irnum";
@@ -58,14 +60,14 @@ public async qasFormBulkUpdateStatus(cts:HttpContextContract){
 
 }
 
-public async readQasformOneUser(ctx:HttpContextContract){
+public async approverlist(ctx:HttpContextContract){
 
   var id=ctx.request.input('id')
   var roletype=ctx.request.input('roletype')
    var from_date=ctx.request.input('from_date')
   var to_date=ctx.request.input('to_date')
 
-
+  var branch=ctx.request.headers()['branch']||''
 
 
 
@@ -73,6 +75,7 @@ public async readQasformOneUser(ctx:HttpContextContract){
 return  await Database
   .from('qasformones')
    .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.branch',branch)//new branch
    .where('qasformones.operator_id',id)
    .andWhere('qasformones.date','>=',from_date)
    .andWhere('qasformones.date','<=',to_date)
@@ -82,6 +85,7 @@ else
 return await Database
   .from('qasformones')
    .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.branch',branch)//new branch
    .andWhere('qasformones.date','>=',from_date)
    .andWhere('qasformones.date','<=',to_date)
    .leftJoin('users','users.id','=','qasformones.operator_id')
@@ -273,6 +277,50 @@ public async getQasFormOneList(ctx:HttpContextContract)
 //find date with to get better performnce
 return await Qasformone.all()
 }
+
+public async getQasOneIR(ctx:HttpContextContract)
+{
+
+
+var ir=  ctx.request.input('ir')
+var branch=ctx.request.headers()['branch']||''
+console.log(ir,branch)
+var rt=await  Qasformone.query()
+ .where('ir',ir)
+ .andWhere('branch',branch).first()
+
+  // return ctx.response.send(rt);
+// console.log("invoice table id",invoice_table_id)
+
+
+var qasFormOne=await Database
+.from('qasformones as qas')
+.select('qas.*',
+'p.observation_print_view as observation_print_view',
+'u.name as operator_name',
+'au.name as approver_name'
+)
+.where('invoice_table_id',rt.invoice_table_id)
+.leftJoin('masterproducts as p','p.rmcode','=','qas.rmcode')
+.leftJoin('users as u','u.id','=','qas.operator_id')
+.leftJoin('users as au','au.id','=','qas.approved_by')
+.first()
+return {
+
+    invoice:{
+qasFormOne,
+// qasFormOne:await Qasformone.query().where('invoice_table_id',invoice_table_id).first(),
+qasFormTwo:await Qasformtwo.query().where('invoice_table_id',rt.invoice_table_id),
+gallery:await Qasformonemedia.query().where('invoice_table_id',rt.invoice_table_id)
+
+    }
+
+
+  }
+
+
+}
+
 
 public async getQasSingleForm(ctx:HttpContextContract)
 {
@@ -504,6 +552,7 @@ var irNum=core.prefixIRNum() +"-"+ await $vm.irNum(branch);
     status,
     roletype,
     batch,
+    branch,
     notes,
     skuid,
     sk_index,
@@ -578,7 +627,7 @@ await Qasformtwo.create(createQasFormTwo)
   }
 
 }
-
+Ws.io.emit('invoice_add', {  })
 return ctx.response.send({
   successStatus:true,
   error:'no issue',

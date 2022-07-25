@@ -1,7 +1,10 @@
 // import type { HttpContextContract } from '@ioc=Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Ws from 'App/Services/Ws'
+
 const user = new User()
+
 export default class UsersController {
 
   // public async  creaeUser(ctx: HttpContextContract) {
@@ -9,7 +12,15 @@ export default class UsersController {
   //   // return ctx
   //     }
 
+  public async startUsersiFNotExist(ctx:HttpContextContract){
 
+
+    var users=await User.query().where('roletype','admin').first()
+    if(users)
+return ctx.response.send(true)
+return ctx.response.send(false)
+
+  }
 public async checkUser(ctx:HttpContextContract){
 
   const {username="",password=""}= ctx.request.all();
@@ -100,6 +111,7 @@ date
 
  })
 
+ Ws.io.emit('newUserCreated', {  })
 
    return ctx.response.send({
     successStatus:true,
@@ -155,9 +167,8 @@ public async  getBranchUsers(ctx: HttpContextContract) {
 // console.log(ctx.request.headers())
 var branch=ctx.request.headers()['branch']||''
 // console.log("check branch",branch)
-return ctx.response.send({
-  data:await User.query().where('branch',branch)
- })
+return ctx.response.send(await User.query().where('branch',branch)
+ )
 
 }
 public async  updateUser(ctx: HttpContextContract) {

@@ -239,10 +239,21 @@ Route.get('/readqasformonelist', async (ctx) => {
 
  })
 
- Route.post('/getqasformnneuser',async(ctx)=>{
+ Route.post('/approverlist',async(ctx)=>{
 
-return new QasformonesController().readQasformOneUser(ctx)
+return new QasformonesController().approverlist(ctx)
  })
+
+ Route.get('/startusersiFnotexist',async(ctx)=>{
+
+  return new UsersController().startUsersiFNotExist(ctx)
+   })
+
+   Route.post('/getqasoneir ',async(ctx)=>{
+
+    return new QasformonesController().getQasOneIR(ctx)
+     })
+
 
 
 

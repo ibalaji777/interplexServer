@@ -1,5 +1,6 @@
 // import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Ws from 'App/Services/Ws'
 
 import Masterproduct from "App/Models/Masterproduct";
 import * as core from './core'
@@ -165,7 +166,7 @@ date,
      })
 
 if(product){
-
+  Ws.io.emit('productCreated', {  })
   return ctx.response.send({
     successStatus:true,
     error:'',
