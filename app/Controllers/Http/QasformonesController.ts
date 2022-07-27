@@ -13,7 +13,7 @@ import Ws from 'App/Services/Ws'
 import * as core from './core'
 import { HttpContext } from "@adonisjs/core/build/standalone";
 import Irnum from "App/Models/Irnum";
-
+import _ from 'lodash'
 export default class QasformonesController {
 
 public async irNum(branch){
@@ -450,6 +450,21 @@ file_type
   // }
 }
 
+public async deleteQasFormOne(ctx:HttpContextContract){
+
+
+  var invoice_table_id=ctx.request.input('invoice_table_id')
+
+   await Qasformone.query().where('invoice_table_id',invoice_table_id).delete()
+   await Qasformtwo.query().where('invoice_table_id',invoice_table_id).delete()
+   await Qasformonemedia.query().where('invoice_table_id',invoice_table_id).delete()
+   Ws.io.emit('invoice_add', {  })
+  return ctx.response.send(true);
+
+
+}
+
+
   public async addInvoices(ctx:HttpContextContract){
 var $vm=this;
 var invoices=ctx.request.input('invoices')
@@ -523,6 +538,13 @@ var irNum=core.prefixIRNum() +"-"+ await $vm.irNum(branch);
         }=qasFormOneArray[qasForm1Index]
 
 //
+var setHeaderFormat=_.map(header_format,(x)=>{
+
+  if(x.name=='ir') x['value']=irNum;
+  if(x.name=='ir') x['value']=irNum;
+  return x;
+})
+
         // console.log("before",qasFormOneArray[qasForm1Index])
   var qasformone= await Qasformone.create({
     invoice_table_id:invoiceTable.id,
@@ -545,7 +567,7 @@ var irNum=core.prefixIRNum() +"-"+ await $vm.irNum(branch);
     duedate,
     observation_print_view,
     observation_format,
-    header_format,
+    header_format:setHeaderFormat,
     remarks,
     approved_by,
     skiplevel_status,

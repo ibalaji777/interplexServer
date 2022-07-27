@@ -2,6 +2,7 @@
 import User from 'App/Models/User'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Ws from 'App/Services/Ws'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 const user = new User()
 
@@ -21,13 +22,31 @@ return ctx.response.send(true)
 return ctx.response.send(false)
 
   }
-public async checkUser(ctx:HttpContextContract){
+ public async isUserExist(username,password){
 
-  const {username="",password=""}= ctx.request.all();
+  var user= await User.query().where('username',username).andWhere('password',password).first()
+if(user){
+  return true
+}
+return false;
+}
 
+  public async checkUser(ctx:HttpContextContract){
+// return 'ok'
+  const {username="",password="",branch='',roletype=""}= ctx.request.all();
+
+
+  // return username+password+branch+roletype
   if(username!=''&&password!=''){
 
-var user= await User.query().where('username',username).andWhere('password',password).first()
+var user= await Database.from('users')
+
+.where('username',username)
+.andWhere('password',password)
+.andWhere('branch',branch)
+.andWhere('roletype',roletype)
+.first()
+// return user;
 if(user){
   return ctx.response.send({
     successStatus:true,
@@ -97,6 +116,13 @@ const    {
     }
 
 
+    if(await this.isUserExist(username,password)){
+      return ctx.response.send({
+        successStatus:false,
+        error:'Try Other Username',
+      })
+    }
+
 var user =await User.create({
 name,
 branch,
@@ -122,15 +148,16 @@ date
 }
 
 public async  removeUser(ctx: HttpContextContract) {
-
+console.log("remove user")
   var id=ctx.request.input('id')
 console.log("id=>",id)
 if(await this.checkAdmin(ctx)){
 const user = await User.findOrFail(id)
-
+var users=await user.delete()
+Ws.io.emit('userRemoved', {  })
 return ctx.response.send({
   successStatus:true,
-  data:await user.delete(),
+  data:users,
   error:'',
 
 })
@@ -145,7 +172,7 @@ return ctx.response.send({
 }
 
 public async checkAdmin(ctx){
-
+return true;
   var roletype=ctx.request.headers()['usertype']
 var username=ctx.request.headers()['username']
 var password=ctx.request.headers()['password']

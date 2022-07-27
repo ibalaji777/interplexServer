@@ -255,11 +255,14 @@ return new QasformonesController().approverlist(ctx)
      })
 
 
-
-
 // public async getelement(ctx:HttpContextContract){
 
 // Route.get('/defaultUser', async (ctx) => {
 //  return new UsersController().defaultUser(ctx)
 
 // })
+Route.post('/deleteqasformone',async(ctx)=>{
+
+  return new QasformonesController().deleteQasFormOne(ctx)
+   })
+
