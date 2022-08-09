@@ -26,9 +26,29 @@ public duedate: String
 @column()
 public skiplevel: String
 @column()
-public observation_format: JSON
+public table_header_format: Array<String>
 @column()
-public observation_print_view: JSON
+public postfix_observation_print_view_format: Object
+@column()
+public observation_format: Object
+@column()
+public observation_header_print_view: Array<Object>
+@column()
+public observation_print_view: Object
+@column()
+public other: Object
+@column()
+public qas_form_one_ui: Object
+@column()
+public qas_form_two_ui: Object
+@column()
+public observation2_header_print_view: Array<Object>
+@column()
+public observation2_print_view: Array<Object>
+@column()
+public observation2_format: Array<Object>
+
+
 @column()
 public date :Date
 

@@ -26,6 +26,9 @@ export default class extends BaseSchema {
       table.double('thick_two').nullable()
       table.string('lot_no').nullable()
       table.string('validation').nullable()
+      table.jsonb('qas_form_two_values')//new
+      table.jsonb('qas_form_two_validation')//new
+      table.jsonb('other')
       table.date('date')
 
       /**

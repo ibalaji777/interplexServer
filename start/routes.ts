@@ -30,7 +30,23 @@ import QasformtwosController from 'App/Controllers/Http/QasformtwosController'
 import UnitsController from 'App/Controllers/Http/UnitsController'
 import UploadtypesController from 'App/Controllers/Http/UploadtypesController'
 import UsersController from 'App/Controllers/Http/UsersController'
+import WhatsappsController from 'App/Controllers/Http/WhatsappsController'
 import ConfigProductFormat from 'App/Models/ConfigProductFormat'
+
+
+
+
+// --------------------------?
+Route.get('/qr', async (ctx) => {
+
+  return new WhatsappsController().qrcode(ctx)
+})
+// Route.get('qr ',async(ctx)=>{
+//   return 'ok'
+//     return new WhatsappsController().qrcode(ctx)
+//      })
+// --------------------------?
+
 
 //branches
 
@@ -81,6 +97,8 @@ Route.get('/product/test', async (ctx) => {
   return new MasterproductsController().defaultProduct(ctx)
 })
 Route.post('/product/create', async (ctx) => {
+  // return ctx.request.all()
+
   return new MasterproductsController().createProduct(ctx)
 })
 
@@ -249,10 +267,22 @@ return new QasformonesController().approverlist(ctx)
   return new UsersController().startUsersiFNotExist(ctx)
    })
 
-   Route.post('/getqasoneir ',async(ctx)=>{
+   Route.post('/getqasoneir',async(ctx)=>{
 
     return new QasformonesController().getQasOneIR(ctx)
      })
+
+    //  Route.post('/deleteqasformone',async(ctx)=>{
+    //   return new QasformonesController().deleteQasFormOne(ctx)
+    //    })
+
+       Route.post('/qasformone/delete',async(ctx)=>{
+        return new QasformonesController().deleteQasFormOne(ctx)
+         })
+
+         Route.post('/product_batch/check',async(ctx)=>{
+          return new MasterproductsController().checkBatchNo(ctx)
+           })
 
 
 // public async getelement(ctx:HttpContextContract){
@@ -261,8 +291,10 @@ return new QasformonesController().approverlist(ctx)
 //  return new UsersController().defaultUser(ctx)
 
 // })
-Route.post('/deleteqasformone',async(ctx)=>{
+// Route.post('/deleteqasformone ',async(ctx)=>{
 
-  return new QasformonesController().deleteQasFormOne(ctx)
-   })
+//   return new QasformonesController().deleteQasFormOne(ctx)
+//    })
+
+///----------------------------
 

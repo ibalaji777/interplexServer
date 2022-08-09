@@ -44,10 +44,11 @@ export default class Qasformone extends BaseModel {
   public comment:String
   @column()
   public duedate:Date
-  @column()
-  public observation_print_view
-  @column()
-  public observation_format
+  // @column()
+  // public observation_print_view
+  // @column()
+  // public observation_format
+
   @column()
   public header_format
   @column()
@@ -75,7 +76,10 @@ export default class Qasformone extends BaseModel {
   public sk_order:String
 
 
-
+  @column()
+  public qas_form_one_values
+  @column()
+  public qas_form_one_validation
 
 
   @column()

@@ -26,9 +26,13 @@ export default class extends BaseSchema {
       table.string('form_format').nullable()
       table.string('comment').nullable()
       table.date('duedate').nullable()
-      table.specificType('qasformtwo','json ARRAY').nullable()
-      table.specificType('observation_print_view','json ARRAY').nullable()
-      table.specificType('observation_format','json ARRAY').nullable()
+
+
+      // table.jsonb('qas_form_two_values').nullable()
+
+      // table.specificType('qasformtwo','json ARRAY').nullable()
+      // table.specificType('observation_print_view','json ARRAY').nullable()
+      // table.specificType('observation_format','json ARRAY').nullable()
       table.specificType('header_format','json ARRAY').nullable()
       table.string('remarks').nullable()
       table.string('status').nullable()//(approved or acceptedOnDeviation or ppap)
@@ -43,9 +47,10 @@ export default class extends BaseSchema {
       table.string('skuid').nullable()
       table.integer('sk_index').defaultTo(0)
       table.string('sk_order').defaultTo(0)
-
       table.date('date').nullable()
 
+      table.jsonb('qas_form_one_values').nullable()
+      table.jsonb('qas_form_one_validation').nullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

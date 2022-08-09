@@ -47,6 +47,13 @@ public  thick_two:Number
 public  lot_no:String
 @column()
 public  validation:String
+
+
+@column()
+public qas_form_two_values
+@column()
+public qas_form_two_validation
+
 @column()
 public  date:Date
 

@@ -173,6 +173,8 @@ id=0,
       thick_two=0,
       lot_no='',
       validation='',
+      qas_form_two_values={},
+      qas_form_two_validation={}
 
 
     }=qasFormTwo[qasfromtwoIndex]
@@ -192,7 +194,8 @@ id=0,
 
       lot_no,
       validation,
-
+      qas_form_two_values,
+      qas_form_two_validation
      })
     }
      return qas;
@@ -228,6 +231,8 @@ id=0,
       approved_by=0,
       skiplevel_status=false,
       roletype='',
+      qas_form_one_values={},
+      qas_form_one_validation={}
       // date=moment().format("YYYY-MM-DD"),
 
 
@@ -263,6 +268,8 @@ id=0,
       approved_by,
       skiplevel_status,
       roletype,
+      qas_form_one_values,
+      qas_form_one_validation
      })
 
   // var qas=   await Qasformone
@@ -332,7 +339,13 @@ console.log("invoice table id",invoice_table_id)
 var qasFormOne=await Database
 .from('qasformones as qas')
 .select('qas.*',
+'p.table_header_format as table_header_format',
+'p.observation_format as observation_format',
+'p.observation2_format as observation2_format',
 'p.observation_print_view as observation_print_view',
+'p.observation2_print_view as observation2_print_view',
+'p.observation_header_print_view as observation_header_print_view',
+'p.observation2_header_print_view as observation2_header_print_view',
 'u.name as operator_name',
 'au.name as approver_name'
 )
@@ -340,6 +353,7 @@ var qasFormOne=await Database
 .leftJoin('masterproducts as p','p.rmcode','=','qas.rmcode')
 .leftJoin('users as u','u.id','=','qas.operator_id')
 .leftJoin('users as au','au.id','=','qas.approved_by')
+
 .first()
 return {
 
@@ -520,8 +534,9 @@ var irNum=core.prefixIRNum() +"-"+ await $vm.irNum(branch);
       form_format='',
       comment='',
       duedate=moment().format("YYYY-MM-DD"),
-      observation_print_view=[],
-      observation_format=[],
+      // observation_print_view=[],
+      // observation_format=[],
+
       header_format=[],
       remarks='',
       approved_by=0,
@@ -533,6 +548,8 @@ var irNum=core.prefixIRNum() +"-"+ await $vm.irNum(branch);
       skuid='',
       sk_index=0,
       sk_order='',
+      qas_form_one_values={},
+      qas_form_one_validation={},
       date=moment().format("YYYY-MM-DD"),
 
         }=qasFormOneArray[qasForm1Index]
@@ -565,8 +582,8 @@ var setHeaderFormat=_.map(header_format,(x)=>{
     grn_date,
     received_qty:parseFloat(received_qty)||0,
     duedate,
-    observation_print_view,
-    observation_format,
+    // observation_print_view,
+    // observation_format,
     header_format:setHeaderFormat,
     remarks,
     approved_by,
@@ -579,6 +596,10 @@ var setHeaderFormat=_.map(header_format,(x)=>{
     skuid,
     sk_index,
     sk_order,
+
+    qas_form_one_values,
+    qas_form_one_validation,
+
     date
 
   })
@@ -607,6 +628,8 @@ var {
   thick_two=0,
   lot_no='',
   validation='',
+  qas_form_two_values={},
+  qas_form_two_validation={}
   // date=moment().format("YYYY-MM-DD"),
 
 }=qasform2Products[qasform2Productindex]
@@ -633,9 +656,10 @@ var createQasFormTwo={
     width_two:core.number(width_two),
     thick_one:core.number(thick_one),
     thick_two:core.number(thick_two),
-
     lot_no,
     validation,
+    qas_form_two_values,
+    qas_form_two_validation,
     date:moment().format("YYYY-MM-DD")///product['date'],
 
    }
