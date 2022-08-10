@@ -33,16 +33,16 @@ public  batch_no:String
 // @column()
 // public  coil:String
 @column()
-public  weight:Number
-@column()
-public  width_one:Number
-@column()
-public  width_two:Number
+public  weight:String
+// @column()
+// public  width_one:String
+// @column()
+// public  width_two:String
 
-@column()
-public  thick_one:Number
-@column()
-public  thick_two:Number
+// @column()
+// public  thick_one:String
+// @column()
+// public  thick_two:String
 @column()
 public  lot_no:String
 @column()
@@ -56,6 +56,9 @@ public qas_form_two_validation
 
 @column()
 public  date:Date
+
+@column()
+public  other:Object
 
 
 

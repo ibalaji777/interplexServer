@@ -284,6 +284,9 @@ return new QasformonesController().approverlist(ctx)
           return new MasterproductsController().checkBatchNo(ctx)
            })
 
+           Route.post('/qasforms/update',async(ctx)=>{
+            return new QasformonesController().updateQasForms(ctx)
+             })
 
 // public async getelement(ctx:HttpContextContract){
 

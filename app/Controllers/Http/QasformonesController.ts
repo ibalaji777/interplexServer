@@ -16,6 +16,32 @@ import Irnum from "App/Models/Irnum";
 import _ from 'lodash'
 export default class QasformonesController {
 
+
+public async updateQasForms(ctx:HttpContextContract)
+{
+
+  var qasFormOneInput=ctx.request.input('qasFormOne')
+  var qasFormTwoInput=ctx.request.input('qasFormTwo')
+console.log(qasFormOneInput)
+console.log(qasFormTwoInput)
+  var qas=   await Qasformone
+  .query()
+  .where('id', qasFormOneInput.id)
+  .update(qasFormOneInput)
+
+  qasFormTwoInput.forEach(async element => {
+    console.log(element)
+    await Qasformtwo
+    .query()
+    .where('id', element.id)
+    .update(element)
+  });
+
+
+
+  // await Qasformtwo.updateOrCreateMany('id', qasFormTwoInput)
+  return ctx.response.send(qas)
+}
 public async irNum(branch){
 
 var result={}
@@ -167,10 +193,10 @@ id=0,
       batch_no='',
       // coil='',
       weight=0,
-      width_one=0,
-      width_two=0,
-      thick_one=0,
-      thick_two=0,
+      // width_one=0,
+      // width_two=0,
+      // thick_one=0,
+      // thick_two=0,
       lot_no='',
       validation='',
       qas_form_two_values={},
@@ -186,11 +212,11 @@ id=0,
       error_status,
       batch_no,
       // coil,
-      weight:core.number(weight),//
-      width_one:core.number(width_one),
-      width_two:core.number(width_two),
-      thick_one:core.number(thick_one),
-      thick_two:core.number(thick_two),
+      weight,//
+      // width_one,
+      // width_two,
+      // thick_one,
+      // thick_two,
 
       lot_no,
       validation,
@@ -610,32 +636,33 @@ for(var qasform2Productindex in qasform2Products)
   var product=qasform2Products[qasform2Productindex];
 // console.log("product",product)
 
-var {
-  // qas_form_one_id=0,
-  // invoice_client_id='',
-  // rmcode='',
-  // eds='',
-  // supplier_name='',
-  // qty=0,
-  // grn_date='',
-  error_status=false,
-  batch_no='',
-  // coil='',
-  weight=0,
-  width_one=0,
-  width_two=0,
-  thick_one=0,
-  thick_two=0,
-  lot_no='',
-  validation='',
-  qas_form_two_values={},
-  qas_form_two_validation={}
-  // date=moment().format("YYYY-MM-DD"),
+// var {
+//   // qas_form_one_id=0,
+//   // invoice_client_id='',
+//   // rmcode='',
+//   // eds='',
+//   // supplier_name='',
+//   // qty=0,
+//   // grn_date='',
+//   error_status=false,
+//   batch_no='',
+//   // coil='',
+//   weight=0,
+//   width_one=0,
+//   width_two=0,
+//   thick_one=0,
+//   thick_two=0,
+//   lot_no='',
+//   validation='',
+//   qas_form_two_values={},
+//   qas_form_two_validation={}
+//   // date=moment().format("YYYY-MM-DD"),
 
-}=qasform2Products[qasform2Productindex]
+// }=product
 
 var qasform2=qasform2Products[qasform2Productindex];
-
+console.log("++++qasform2+++")
+console.log(qasform2)
 var createQasFormTwo={
   invoice_table_id:invoiceTable.id,
 
@@ -648,20 +675,20 @@ var createQasFormTwo={
     // qty:parseFloat(qty)||0,
     grn_date:getInvoice['grn_date'],
     grn_no:getInvoice['grn_no']||'',//
-    error_status,
-    batch_no,
+    error_status:qasform2.error_status,
+    batch_no:qasform2.batch_no||'',
     // coil,
-    weight:core.number(weight),//
-    width_one:core.number(width_one),
-    width_two:core.number(width_two),
-    thick_one:core.number(thick_one),
-    thick_two:core.number(thick_two),
-    lot_no,
-    validation,
-    qas_form_two_values,
-    qas_form_two_validation,
-    date:moment().format("YYYY-MM-DD")///product['date'],
-
+    weight:qasform2.weight||"",
+    // width_one:qasform2.width_one||"",
+    // width_two:qasform2.width_two||'',
+    // thick_one:qasform2.thick_one||'',
+    // thick_two:qasform2.thick_two||'',
+    lot_no:qasform2.lot_no||'',
+    validation:qasform2.validation||false,
+    qas_form_two_values:qasform2.qas_form_two_values||{},
+    qas_form_two_validation:qasform2.qas_form_two_validation||{},
+    date:moment().format("YYYY-MM-DD"),///product['date'],
+   other:{}
    }
 await Qasformtwo.create(createQasFormTwo)
 }
