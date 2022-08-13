@@ -266,6 +266,10 @@ return new QasformonesController().approverlist(ctx)
 
   return new UsersController().startUsersiFNotExist(ctx)
    })
+   Route.get('/irnum',async(ctx)=>{
+
+    return new QasformonesController().irNum('Chennai')
+     })
 
    Route.post('/getqasoneir',async(ctx)=>{
 

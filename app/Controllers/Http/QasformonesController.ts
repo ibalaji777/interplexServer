@@ -44,26 +44,32 @@ console.log(qasFormTwoInput)
 }
 public async irNum(branch){
 
-var result={}
-// await  Database.rawQuery(`
-// UPDATE totals
-// SET total = total + 1
-// WHERE name = 'bill'`)
-if(!await Database.from('irnums').where('id',branch).first()){
 
-   await Irnum.create({
-    id:branch,
-    count:1
-  })
- result= await Database.from('irnums').where('id',branch).first()
-return result["count"];
-}
+var month_num=moment().format("M")
+var year=moment().format("YYYY")
+var total= await Database.from('qasformones')
+.whereRaw(`
+EXTRACT('month' from  created_at) = `+month_num+`
+and EXTRACT('year' from created_at)=`+year+``)
+.where('branch',branch)
+.count("*","total").first()
 
- await Database.from('irnums')
-.increment('count',1).where('id',branch).first()
+return parseFloat(total.total||0)+1;
+// if(!await Database.from('irnums').where('id',branch).first()){
 
-result= await Database.from('irnums').where('id',branch).first()
-return result['count']
+//    await Irnum.create({
+//     id:branch,
+//     count:1
+//   })
+//  result= await Database.from('irnums').where('id',branch).first()
+// return result["count"];
+// }
+
+//  await Database.from('irnums')
+// .increment('count',1).where('id',branch).first()
+
+// result= await Database.from('irnums').where('id',branch).first()
+// return result['count']
 
 }
 
