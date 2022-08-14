@@ -16,7 +16,47 @@ import Irnum from "App/Models/Irnum";
 import _ from 'lodash'
 export default class QasformonesController {
 
+  public async find_qas_form(ctx:HttpContextContract)
+{
 
+  var key=ctx.request.input('key')
+  var value=ctx.request.input('value')
+
+  var id=ctx.request.headers()['id']||''
+  var roletype=ctx.request.input('roletype')
+  var branch=ctx.request.headers()['branch']||''
+
+
+
+  if(roletype=='operator')
+return  await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.branch',branch)//new branch
+   .where('qasformones.operator_id',id)
+   .where(key,value)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
+else
+return await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.branch',branch)//new branch
+   .where('qasformones.operator_id',id)
+   .where(key,value)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
+
+
+
+
+
+
+
+
+
+
+}
 public async updateQasForms(ctx:HttpContextContract)
 {
 
@@ -24,17 +64,24 @@ public async updateQasForms(ctx:HttpContextContract)
   var qasFormTwoInput=ctx.request.input('qasFormTwo')
 console.log(qasFormOneInput)
 console.log(qasFormTwoInput)
-  var qas=   await Qasformone
-  .query()
-  .where('id', qasFormOneInput.id)
-  .update(qasFormOneInput)
+  // var qas=   await Qasformone
+  // .query()
+  // .where('id', qasFormOneInput.id)
+
+  // .update(qasFormOneInput)
+  var qas=   await Qasformone.findOrFail(qasFormOneInput.id)
+    await qas.merge(qasFormOneInput).save()
 
   qasFormTwoInput.forEach(async element => {
-    console.log(element)
-    await Qasformtwo
-    .query()
-    .where('id', element.id)
-    .update(element)
+    // console.log(element)
+    // await Qasformtwo
+    // .query()
+    // .where('id', element.id)
+    // .update(element)
+    var qas=   await Qasformtwo.findOrFail(element.id)
+    await qas.merge(element).save()
+
+
   });
 
 

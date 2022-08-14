@@ -23,6 +23,7 @@ import AssurancemediasController from 'App/Controllers/Http/AssurancemediasContr
 import BranchesController from 'App/Controllers/Http/BranchesController'
 import ConfigProductFormatsController from 'App/Controllers/Http/ConfigProductFormatsController'
 import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsController'
+import LabelsettingsController from 'App/Controllers/Http/LabelsettingsController'
 import MasterproductsController from 'App/Controllers/Http/MasterproductsController'
 import Qasform2configsController from 'App/Controllers/Http/Qasform2configsController'
 import QasformonesController from 'App/Controllers/Http/QasformonesController'
@@ -291,6 +292,21 @@ return new QasformonesController().approverlist(ctx)
            Route.post('/qasforms/update',async(ctx)=>{
             return new QasformonesController().updateQasForms(ctx)
              })
+
+             Route.post('/labelsetting/save',async(ctx)=>{
+              return new LabelsettingsController().labelSettingSave(ctx)
+               })
+
+               Route.get('/labelsetting/read',async(ctx)=>{
+                return new LabelsettingsController().labelSetting(ctx)
+                 })
+
+                 Route.post('/find_qas_form',async(ctx)=>{
+                  console.log(ctx.request.all())
+                  return new QasformonesController().find_qas_form(ctx)
+                   })
+
+
 
 // public async getelement(ctx:HttpContextContract){
 

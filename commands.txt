@@ -42,7 +42,7 @@ node ace make:model Branches -cm
 node ace make:model Units -cm
 node ace make:model Users -cm
 node ace make:model Assurancemedia -cm
-
+node ace make:model Labelsetting -cm //new
 CREATED FILES FOR ABOVE COMMANDS ARE
 ----------------------------------------------------------------
 model        =>      app\model\filename.ts
