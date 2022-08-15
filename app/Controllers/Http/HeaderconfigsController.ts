@@ -185,6 +185,36 @@ export default class HeaderconfigsController {
 	}
 
 
+
+  public async getHeaderConfig(ctx: HttpContextContract/*unresolved*/) {
+    var branch=ctx.request.headers()['branch']||''
+    var get = await Headerconfig.query().where('branch', branch).first()
+    return ctx.response.send(get)
+	}
+  public async setHeaderConfig(ctx: HttpContextContract/*unresolved*/) {
+    var config=ctx.request.input('config')
+    var branch=ctx.request.headers()['branch']||''
+    var get = await Headerconfig.query().where('branch', branch).first()
+   if(get){
+    //update
+    var header= await Headerconfig.findByOrFail('branch',branch)
+    await header.merge({config}).save()
+
+      return ctx.response.send(await Headerconfig.query().where('branch', branch).first());
+    }
+    //insert
+    await Headerconfig.create({
+      branch,
+      config
+
+  })
+
+
+
+  return ctx.response.send(await Headerconfig.query().where('branch', branch).first());
+	}
+
+
 	public async updateHeaderConfig(ctx: HttpContextContract) {
 
 		const {

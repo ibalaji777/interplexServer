@@ -3,7 +3,7 @@ import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class Headerconfig extends BaseModel {
   @column({ isPrimary: true })
-  public id: String
+  public branch: String
 @column()
 public config//:Array<JSON>
   @column.dateTime({ autoCreate: true })

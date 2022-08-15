@@ -40,7 +40,7 @@ import ConfigProductFormat from 'App/Models/ConfigProductFormat'
 // --------------------------?
 Route.get('/qr', async (ctx) => {
 
-  return new WhatsappsController().qrcode(ctx)
+return new WhatsappsController().qrcode(ctx)
 })
 // Route.get('qr ',async(ctx)=>{
 //   return 'ok'
@@ -53,7 +53,7 @@ Route.get('/qr', async (ctx) => {
 
 Route.get('/branches', async (ctx) => {
 
-  return new BranchesController().readBranches(ctx)
+return new BranchesController().readBranches(ctx)
 })
 
 // Route.get('/', async (ctx) => {
@@ -63,57 +63,57 @@ Route.get('/branches', async (ctx) => {
 
 // *****************USER*******************************
 Route.post('/login', async (ctx) => {
-  return new UsersController().checkUser(ctx)
+return new UsersController().checkUser(ctx)
 })
 
 Route.post('/user/create', async (ctx) => {
-  return new UsersController().createUser(ctx)
+return new UsersController().createUser(ctx)
 })
 
 Route.get('/getusers', async (ctx) => {
-  return new UsersController().getBranchUsers(ctx)
+return new UsersController().getBranchUsers(ctx)
 })
 
 
 Route.post('/user/remove', async (ctx) => {
-  return new UsersController().removeUser(ctx)
+return new UsersController().removeUser(ctx)
 })
 
 Route.post('/user/update', async (ctx) => {
-  return new UsersController().updateUser(ctx)
+return new UsersController().updateUser(ctx)
 })
 
 Route.get('/user/test', async (ctx) => {
-  return new UsersController().defaultUser(ctx)
+return new UsersController().defaultUser(ctx)
 })
 
 
 // *********************qasformone************************
 
 Route.post('/product/find', async (ctx) => {
-  return new MasterproductsController().findProducts(ctx)
+return new MasterproductsController().findProducts(ctx)
 })
 
 Route.get('/product/test', async (ctx) => {
-  return new MasterproductsController().defaultProduct(ctx)
+return new MasterproductsController().defaultProduct(ctx)
 })
 Route.post('/product/create', async (ctx) => {
-  // return ctx.request.all()
+// return ctx.request.all()
 
-  return new MasterproductsController().createProduct(ctx)
+return new MasterproductsController().createProduct(ctx)
 })
 
 Route.post('/product/remove', async (ctx) => {
-  return new MasterproductsController().removeProduct(ctx)
+return new MasterproductsController().removeProduct(ctx)
 })
 
 Route.post('/product/update', async (ctx) => {
-  return new MasterproductsController().updateProduct(ctx)
+return new MasterproductsController().updateProduct(ctx)
 })
 
 
 Route.get('/readproducts', async (ctx) => {
-  return new MasterproductsController().getBranchProducts(ctx)
+return new MasterproductsController().getBranchProducts(ctx)
 })
 
 
@@ -133,56 +133,56 @@ Route.get('/readproducts', async (ctx) => {
 // **************branches***************
 
 Route.get('/readbranch', async (ctx) => {
-  return new BranchesController().readBranches(ctx)
+return new BranchesController().readBranches(ctx)
 })
 
 Route.post('/branch/create', async (ctx) => {
-  return new BranchesController().createBranch(ctx)
+return new BranchesController().createBranch(ctx)
 })
 
 
 Route.post('/branch/remove', async (ctx) => {
-  return new BranchesController().removeBranch(ctx)
+return new BranchesController().removeBranch(ctx)
 })
 
 Route.post('/branch/update', async (ctx) => {
-  return new BranchesController().updateBranch(ctx)
+return new BranchesController().updateBranch(ctx)
 })
 
 // **************upload Types***************
 
 Route.get('/readuploadtype', async (ctx) => {
-  return new UploadtypesController().readUploadType(ctx)
+return new UploadtypesController().readUploadType(ctx)
 })
 
 Route.post('/uploadtype/create', async (ctx) => {
-  return new UploadtypesController().createUploadType(ctx)
+return new UploadtypesController().createUploadType(ctx)
 })
 
 
 Route.post('/uploadtype/remove', async (ctx) => {
-  return new UploadtypesController().removeUploadType(ctx)
+return new UploadtypesController().removeUploadType(ctx)
 })
 
 Route.post('/uploadtype/update', async (ctx) => {
-  return new UploadtypesController().updateUploadType(ctx)
+return new UploadtypesController().updateUploadType(ctx)
 })
 
 // *************config**********************
 
 Route.get('/readheaderconfig', async (ctx) => {
-  return new HeaderconfigsController().HeaderConfig(ctx)
+return new HeaderconfigsController().HeaderConfig(ctx)
 })
 
 Route.post('/headerconfig/update', async (ctx) => {
-  return new HeaderconfigsController().updateHeaderConfig(ctx)
+return new HeaderconfigsController().updateHeaderConfig(ctx)
 })
 Route.get('/readqasform2config', async (ctx) => {
-  return new Qasform2configsController().readQasForm2Config(ctx)
+return new Qasform2configsController().readQasForm2Config(ctx)
 })
 
 Route.post('/headerqasform2/update', async (ctx) => {
-  return new Qasform2configsController().updateQasForm2Config(ctx)
+return new Qasform2configsController().updateQasForm2Config(ctx)
 })
 
 // Route.post('/productbatch/check', async (ctx) => {
@@ -190,122 +190,131 @@ Route.post('/headerqasform2/update', async (ctx) => {
 // })
 
 Route.post('/checkproductsbatch', async (ctx) => {
-  return new QasformonesController().checkProductsBatch(ctx)
+return new QasformonesController().checkProductsBatch(ctx)
 })
 
 
 Route.post('/addInvoices', async (ctx) => {
-  return new QasformonesController().addInvoices(ctx)
+return new QasformonesController().addInvoices(ctx)
 })
 
 Route.post('/invoiceupload', async (ctx) => {
-  return new QasformonesController().invoiceUpload(ctx)
+return new QasformonesController().invoiceUpload(ctx)
 })
 
 // public async getelement(ctx:HttpContextContract){
 Route.get('/getelement', async (ctx) => {
- return new QasformonesController().getelement(ctx)
+return new QasformonesController().getelement(ctx)
 
 })
 
 
 Route.get('/readqasformonelist', async (ctx) => {
-  return new QasformonesController().getQasFormOneList(ctx)
+return new QasformonesController().getQasFormOneList(ctx)
 
- })
- Route.post('/readqasformonesingle', async (ctx) => {
-  return new QasformonesController().getQasSingleForm(ctx)
+})
+Route.post('/readqasformonesingle', async (ctx) => {
+return new QasformonesController().getQasSingleForm(ctx)
 
- })
+})
 
- Route.post('/qasformone/update', async (ctx) => {
-  return new QasformonesController().updateQasFormOne(ctx)
+Route.post('/qasformone/update', async (ctx) => {
+return new QasformonesController().updateQasFormOne(ctx)
 
- })
+})
 
- Route.post('/qasformtwo/update', async (ctx) => {
-  return new QasformonesController().updateQasFormTwo(ctx)
+Route.post('/qasformtwo/update', async (ctx) => {
+return new QasformonesController().updateQasFormTwo(ctx)
 
- })
+})
 
- Route.post('/media/delete', async (ctx) => {
-  return new QasformonesController().invoiceImageDelete(ctx)
+Route.post('/media/delete', async (ctx) => {
+return new QasformonesController().invoiceImageDelete(ctx)
 
- })
+})
 
- Route.post('/readoperatorforms', async (ctx) => {
-  return new QasformonesController().getOperatorQasFormList(ctx)
+Route.post('/readoperatorforms', async (ctx) => {
+return new QasformonesController().getOperatorQasFormList(ctx)
 
- })
+})
 
- Route.post('/qasformstatus/update', async (ctx) => {
-  return new QasformonesController().qasFormUpdateStatus(ctx)
+Route.post('/qasformstatus/update', async (ctx) => {
+return new QasformonesController().qasFormUpdateStatus(ctx)
 
- })
- Route.post('/qasformsbulkstatus/update', async (ctx) => {
-  return new QasformonesController().qasFormBulkUpdateStatus(ctx)
+})
+Route.post('/qasformsbulkstatus/update', async (ctx) => {
+return new QasformonesController().qasFormBulkUpdateStatus(ctx)
 
- })
+})
 
 
- Route.post('/productformat/update', async (ctx) => {
-  return new ConfigProductFormatsController().updateConfig(ctx)
+Route.post('/productformat/update', async (ctx) => {
+return new ConfigProductFormatsController().updateConfig(ctx)
 
- })
+})
 
- Route.get('/productformat/read', async (ctx) => {
-  return new ConfigProductFormatsController().getProductConfig(ctx)
+Route.get('/productformat/read', async (ctx) => {
+return new ConfigProductFormatsController().getProductConfig(ctx)
 
- })
+})
 
- Route.post('/approverlist',async(ctx)=>{
+Route.post('/approverlist',async(ctx)=>{
 
 return new QasformonesController().approverlist(ctx)
- })
+})
 
- Route.get('/startusersiFnotexist',async(ctx)=>{
+Route.get('/startusersiFnotexist',async(ctx)=>{
 
-  return new UsersController().startUsersiFNotExist(ctx)
-   })
-   Route.get('/irnum',async(ctx)=>{
+return new UsersController().startUsersiFNotExist(ctx)
+})
+Route.get('/irnum',async(ctx)=>{
 
-    return new QasformonesController().irNum('Chennai')
-     })
+return new QasformonesController().irNum('Chennai')
+})
 
-   Route.post('/getqasoneir',async(ctx)=>{
+Route.post('/getqasoneir',async(ctx)=>{
 
-    return new QasformonesController().getQasOneIR(ctx)
-     })
+return new QasformonesController().getQasOneIR(ctx)
+})
 
-    //  Route.post('/deleteqasformone',async(ctx)=>{
-    //   return new QasformonesController().deleteQasFormOne(ctx)
-    //    })
+//  Route.post('/deleteqasformone',async(ctx)=>{
+//   return new QasformonesController().deleteQasFormOne(ctx)
+//    })
 
-       Route.post('/qasformone/delete',async(ctx)=>{
-        return new QasformonesController().deleteQasFormOne(ctx)
-         })
+Route.post('/qasformone/delete',async(ctx)=>{
+return new QasformonesController().deleteQasFormOne(ctx)
+})
 
-         Route.post('/product_batch/check',async(ctx)=>{
-          return new MasterproductsController().checkBatchNo(ctx)
-           })
+Route.post('/product_batch/check',async(ctx)=>{
+return new MasterproductsController().checkBatchNo(ctx)
+})
 
-           Route.post('/qasforms/update',async(ctx)=>{
-            return new QasformonesController().updateQasForms(ctx)
-             })
+Route.post('/qasforms/update',async(ctx)=>{
+return new QasformonesController().updateQasForms(ctx)
+})
 
-             Route.post('/labelsetting/save',async(ctx)=>{
-              return new LabelsettingsController().labelSettingSave(ctx)
-               })
+Route.post('/labelsetting/save',async(ctx)=>{
+return new LabelsettingsController().labelSettingSave(ctx)
+})
 
-               Route.get('/labelsetting/read',async(ctx)=>{
-                return new LabelsettingsController().labelSetting(ctx)
-                 })
+Route.get('/labelsetting/read',async(ctx)=>{
+return new LabelsettingsController().labelSetting(ctx)
+})
 
-                 Route.post('/find_qas_form',async(ctx)=>{
-                  console.log(ctx.request.all())
-                  return new QasformonesController().find_qas_form(ctx)
-                   })
+Route.post('/find_qas_form',async(ctx)=>{
+console.log(ctx.request.all())
+return new QasformonesController().find_qas_form(ctx)
+})
 
+
+Route.get('/headerconfig/read',async(ctx)=>{
+return new HeaderconfigsController().getHeaderConfig(ctx)
+})
+
+Route.post('/headerconfig/save',async(ctx)=>{
+console.log(ctx.request.all())
+return new HeaderconfigsController().setHeaderConfig(ctx)
+})
 
 
 // public async getelement(ctx:HttpContextContract){
