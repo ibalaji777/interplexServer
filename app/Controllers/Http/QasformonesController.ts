@@ -452,7 +452,7 @@ gallery:await Qasformonemedia.query().where('invoice_table_id',invoice_table_id)
 public async checkProductsBatch(ctx:HttpContextContract)
 {
 var products=ctx.request.input('products')
-
+console.log(products)
 var productsResult=[];
 for(var productIndex in products){
 
@@ -469,6 +469,7 @@ return ctx.response.send(products)
 
 
     // var batch_no=ctx.request.input('batch_no')||''
+    console.log("batch no",batch_no)
 var  check=await Qasformtwo.query().where('batch_no',batch_no).first();
 
 if(check) return true;

@@ -24,6 +24,7 @@ import BranchesController from 'App/Controllers/Http/BranchesController'
 import ConfigProductFormatsController from 'App/Controllers/Http/ConfigProductFormatsController'
 import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsController'
 import LabelsettingsController from 'App/Controllers/Http/LabelsettingsController'
+import MapproductcodesController from 'App/Controllers/Http/MapproductcodesController'
 import MasterproductsController from 'App/Controllers/Http/MasterproductsController'
 import Qasform2configsController from 'App/Controllers/Http/Qasform2configsController'
 import QasformonesController from 'App/Controllers/Http/QasformonesController'
@@ -317,7 +318,18 @@ return new HeaderconfigsController().setHeaderConfig(ctx)
 })
 
 
-// public async getelement(ctx:HttpContextContract){
+
+
+Route.get('/map_product_code/read',async(ctx)=>{
+  return new MapproductcodesController().getCode(ctx)
+  })
+
+  Route.post('/map_product_code/save',async(ctx)=>{
+  console.log(ctx.request.all())
+  return new MapproductcodesController().setCode(ctx)
+  })
+
+  // public async getelement(ctx:HttpContextContract){
 
 // Route.get('/defaultUser', async (ctx) => {
 //  return new UsersController().defaultUser(ctx)
