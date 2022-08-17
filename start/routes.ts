@@ -320,14 +320,24 @@ return new HeaderconfigsController().setHeaderConfig(ctx)
 
 
 
-Route.get('/map_product_code/read',async(ctx)=>{
-  return new MapproductcodesController().getCode(ctx)
+Route.get('/datOneCode/read',async(ctx)=>{
+  return new MapproductcodesController().getDatOneCode(ctx)
   })
 
-  Route.post('/map_product_code/save',async(ctx)=>{
+  Route.post('/datOneCode/save',async(ctx)=>{
   console.log(ctx.request.all())
-  return new MapproductcodesController().setCode(ctx)
+  return new MapproductcodesController().setDatOneCode(ctx)
   })
+
+  Route.get('/datTwoCode/read',async(ctx)=>{
+    return new MapproductcodesController().getDatTwoCode(ctx)
+    })
+
+    Route.post('/datTwoCode/save',async(ctx)=>{
+    console.log(ctx.request.all())
+    return new MapproductcodesController().setDatTwoCode(ctx)
+    })
+
 
   // public async getelement(ctx:HttpContextContract){
 
