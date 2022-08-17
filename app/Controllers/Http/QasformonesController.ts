@@ -14,6 +14,7 @@ import * as core from './core'
 import { HttpContext } from "@adonisjs/core/build/standalone";
 import Irnum from "App/Models/Irnum";
 import _ from 'lodash'
+import Masterproduct from "App/Models/Masterproduct";
 export default class QasformonesController {
 
   public async find_qas_form(ctx:HttpContextContract)
@@ -457,6 +458,7 @@ var productsResult=[];
 for(var productIndex in products){
 
  products[productIndex]['isExist']=await this.productBatchCheck(ctx,products[productIndex].batch_no)
+ products[productIndex]['isRmcodeExist']=await this.productPartNoCheck(ctx,products[productIndex].rmcode)
 
  productsResult.push(products[productIndex])
 }
@@ -465,12 +467,29 @@ return ctx.response.send(products)
 
 }
 
-  public async  productBatchCheck(ctx:HttpContextContract,batch_no){
+
+public async  productPartNoCheck(ctx:HttpContextContract,rmcode){
+
+
+  // var batch_no=ctx.request.input('batch_no')||''
+  // console.log("Rmcode",rmcode)
+var  check=await Masterproduct.query().where('rmcode',rmcode).first();
+
+if(check) return true;
+return false;
+
+
+}
+
+
+
+public async  productBatchCheck(ctx:HttpContextContract,batch_no){
 
 
     // var batch_no=ctx.request.input('batch_no')||''
     console.log("batch no",batch_no)
 var  check=await Qasformtwo.query().where('batch_no',batch_no).first();
+console.log("batch no",check?true:false)
 
 if(check) return true;
 return false;
