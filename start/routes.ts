@@ -22,6 +22,7 @@ import Route from '@ioc:Adonis/Core/Route'
 import AssurancemediasController from 'App/Controllers/Http/AssurancemediasController'
 import BranchesController from 'App/Controllers/Http/BranchesController'
 import ConfigProductFormatsController from 'App/Controllers/Http/ConfigProductFormatsController'
+import DefaultConfigsController from 'App/Controllers/Http/DefaultConfigsController'
 import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsController'
 import LabelsettingsController from 'App/Controllers/Http/LabelsettingsController'
 import MapproductcodesController from 'App/Controllers/Http/MapproductcodesController'
@@ -29,6 +30,7 @@ import MasterproductsController from 'App/Controllers/Http/MasterproductsControl
 import Qasform2configsController from 'App/Controllers/Http/Qasform2configsController'
 import QasformonesController from 'App/Controllers/Http/QasformonesController'
 import QasformtwosController from 'App/Controllers/Http/QasformtwosController'
+import SapimportconfigsController from 'App/Controllers/Http/SapimportconfigsController'
 import UnitsController from 'App/Controllers/Http/UnitsController'
 import UploadtypesController from 'App/Controllers/Http/UploadtypesController'
 import UsersController from 'App/Controllers/Http/UsersController'
@@ -210,6 +212,11 @@ return new QasformonesController().getelement(ctx)
 })
 
 
+// Route.get('/readqasformonedatelist', async (ctx) => {
+//   return new QasformonesController().getQasFormOneDateList(ctx)
+
+//   })
+
 Route.get('/readqasformonelist', async (ctx) => {
 return new QasformonesController().getQasFormOneList(ctx)
 
@@ -337,6 +344,22 @@ Route.get('/datOneCode/read',async(ctx)=>{
     console.log(ctx.request.all())
     return new MapproductcodesController().setDatTwoCode(ctx)
     })
+
+    Route.get('/getsapimport',async(ctx)=>{
+      return new SapimportconfigsController().getSapImport(ctx)
+      })
+
+      Route.post('/setsapimport',async(ctx)=>{
+      return new SapimportconfigsController().setSapImport(ctx)
+      })
+
+      Route.get('/getdefaultimport',async(ctx)=>{
+        return new DefaultConfigsController().getDefaultImport(ctx)
+        })
+
+        Route.post('/setdefaultimport',async(ctx)=>{
+        return new DefaultConfigsController().setDefaultImport(ctx)
+        })
 
 
   // public async getelement(ctx:HttpContextContract){
