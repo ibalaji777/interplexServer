@@ -47,6 +47,13 @@ node ace make:model Mapproductcode -cm //new
 
 node ace make:model Datonecode -m //new
 node ace make:model Dattwocode -m //new
+
+node ace make:model DefaultConfig -cm //new
+node ace make:model Sapimportconfig -cm //new
+
+node ace make:model Printconfig -cm //new
+
+
 CREATED FILES FOR ABOVE COMMANDS ARE
 ----------------------------------------------------------------
 model        =>      app\model\filename.ts

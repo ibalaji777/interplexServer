@@ -27,6 +27,7 @@ import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsControlle
 import LabelsettingsController from 'App/Controllers/Http/LabelsettingsController'
 import MapproductcodesController from 'App/Controllers/Http/MapproductcodesController'
 import MasterproductsController from 'App/Controllers/Http/MasterproductsController'
+import PrintconfigsController from 'App/Controllers/Http/PrintconfigsController'
 import Qasform2configsController from 'App/Controllers/Http/Qasform2configsController'
 import QasformonesController from 'App/Controllers/Http/QasformonesController'
 import QasformtwosController from 'App/Controllers/Http/QasformtwosController'
@@ -360,6 +361,14 @@ Route.get('/datOneCode/read',async(ctx)=>{
         Route.post('/setdefaultimport',async(ctx)=>{
         return new DefaultConfigsController().setDefaultImport(ctx)
         })
+        Route.get('/getprintconfig',async(ctx)=>{
+          return new PrintconfigsController().getPrintConfig(ctx)
+          })
+
+          Route.post('/setprintconfig',async(ctx)=>{
+          return new PrintconfigsController().setPrintConfig(ctx)
+          })
+
 
 
   // public async getelement(ctx:HttpContextContract){
