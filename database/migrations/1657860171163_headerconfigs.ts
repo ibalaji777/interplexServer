@@ -5,6 +5,7 @@ export default class extends BaseSchema {
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
+      table.increments('id')
       table.string('branch')
       table.specificType('config','json  ARRAY').nullable()
 

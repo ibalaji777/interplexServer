@@ -174,12 +174,12 @@ return new UploadtypesController().updateUploadType(ctx)
 
 // *************config**********************
 
-Route.get('/readheaderconfig', async (ctx) => {
-return new HeaderconfigsController().HeaderConfig(ctx)
+Route.get('/getheaderconfig', async (ctx) => {
+return new HeaderconfigsController().getHeaderConfig(ctx)
 })
 
-Route.post('/headerconfig/update', async (ctx) => {
-return new HeaderconfigsController().updateHeaderConfig(ctx)
+Route.post('/setheaderconfig', async (ctx) => {
+return new HeaderconfigsController().setHeaderConfig(ctx)
 })
 Route.get('/readqasform2config', async (ctx) => {
 return new Qasform2configsController().readQasForm2Config(ctx)
@@ -316,14 +316,14 @@ return new QasformonesController().find_qas_form(ctx)
 })
 
 
-Route.get('/headerconfig/read',async(ctx)=>{
-return new HeaderconfigsController().getHeaderConfig(ctx)
-})
+// Route.get('/headerconfig/read',async(ctx)=>{
+// return new HeaderconfigsController().getHeaderConfig(ctx)
+// })
 
-Route.post('/headerconfig/save',async(ctx)=>{
-console.log(ctx.request.all())
-return new HeaderconfigsController().setHeaderConfig(ctx)
-})
+// Route.post('/headerconfig/save',async(ctx)=>{
+// console.log(ctx.request.all())
+// return new HeaderconfigsController().setHeaderConfig(ctx)
+// })
 
 
 
