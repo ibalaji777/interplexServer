@@ -22,7 +22,6 @@ export default class QasformonesController {
 
   var key=ctx.request.input('key')
   var value=ctx.request.input('value')
-
   var id=ctx.request.headers()['id']||''
   var roletype=ctx.request.input('roletype')
   var branch=ctx.request.headers()['branch']||''
@@ -43,7 +42,6 @@ return await Database
   .from('qasformones')
    .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
    .where('qasformones.branch',branch)//new branch
-   .where('qasformones.operator_id',id)
    .where(key,value)
    .leftJoin('users','users.id','=','qasformones.operator_id')
    .leftJoin('users as us','us.id','=','qasformones.approved_by')
