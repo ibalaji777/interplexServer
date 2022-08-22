@@ -16,7 +16,20 @@ import Irnum from "App/Models/Irnum";
 import _ from 'lodash'
 import Masterproduct from "App/Models/Masterproduct";
 export default class QasformonesController {
+public  async labelGenerate(ctx:HttpContextContract)
+{
 
+var selected=ctx.request.input('qasFormOne')
+
+
+for(var index in selected){
+var qasFormTwo=await Qasformtwo.query().where('qas_form_one_id',selected[index].id);
+selected[index]['qasFormTwo']=qasFormTwo
+}
+
+
+return ctx.response.send(selected)
+  }
   public async find_qas_form(ctx:HttpContextContract)
 {
 

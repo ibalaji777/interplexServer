@@ -315,6 +315,10 @@ console.log(ctx.request.all())
 return new QasformonesController().find_qas_form(ctx)
 })
 
+Route.post('/labelgenerate',async(ctx)=>{
+  return new QasformonesController().labelGenerate(ctx)
+  })
+
 
 // Route.get('/headerconfig/read',async(ctx)=>{
 // return new HeaderconfigsController().getHeaderConfig(ctx)

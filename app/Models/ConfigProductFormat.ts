@@ -2,8 +2,10 @@ import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
 export default class ConfigProductFormat extends BaseModel {
+  @column({ isPrimary: true })
+  public id: number
   @column()
-  public id: String
+  public branch
   @column()
   public config
   @column.dateTime({ autoCreate: true })
