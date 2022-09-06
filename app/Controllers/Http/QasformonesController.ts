@@ -511,7 +511,7 @@ return false;
   public async invoiceUpload(ctx:HttpContextContract){
   // Access file
   const coverImage = ctx.request.file('file', {
-    extnames: ['jpg', 'png', 'jpeg'],
+    extnames: ['jpg', 'png', 'jpeg','pdf'],
     size: '200mb'
   })
 console.log(coverImage)
@@ -519,7 +519,8 @@ const {
   invoice_client_id='',
   invoice_table_id=0,
   invoice_no='',
-  file_type=''
+  file_type='',
+  title=''
 
 
 
@@ -541,7 +542,8 @@ var uuid=uuidv4()
   ext:coverImage?.extname,
   name:uuid,
   full_name:uuid+'.'+coverImage?.extname,
-file_type
+file_type,
+title
 })
 
   await coverImage?.move(Application.publicPath('uploads'),{
@@ -784,6 +786,213 @@ await Qasformtwo.create(createQasFormTwo)
   }
 
 }
+Ws.io.emit('invoice_add', {  })
+return ctx.response.send({
+  successStatus:true,
+  error:'no issue',
+  data:result
+
+})
+
+  }
+
+
+    public async addInvoiceSingle(ctx:HttpContextContract){
+var $vm=this;
+var single_invoice=ctx.request.input('invoice')
+var result=[];
+var invoiceTable={id:0};
+var branch=ctx.request.headers()['branch']||''
+// console.log('branch ir num',await $vm.irNum(branch))
+
+// return invoices;
+
+
+var getInvoice=single_invoice
+
+ invoiceTable=await Invoice.create({
+invoice_client_id:getInvoice.invoice_client_id||'',
+supplier_name:getInvoice.supplier_name||'',
+invoice_no:getInvoice.invoice_no||'',
+invoice_date:getInvoice.invoice_date||moment().format("YYYY-MM-DD"),
+grn_no:getInvoice.grn_no||'',
+grn_date:getInvoice.grn_date||moment().format("YYYY-MM-DD"),
+operator_id:getInvoice.operator_id||0
+
+
+})
+
+
+// invoiceTable.id
+result.push(invoiceTable)
+
+
+  var qasFormOneArray=getInvoice.qasForm1New;
+// console.log('Gallery',getInvoice.gallery)
+
+
+
+  for(var qasForm1Index in qasFormOneArray){
+var irNum=core.prefixIRNum() +"-"+ await $vm.irNum(branch);
+    const    {
+      operator_id=0,
+      supplier_name='',
+      invoice_client_id="",
+      invoice_no='',
+      invoice_date=moment().format("YYYY-MM-DD"),
+      invoice_qty=0,
+      ir=0,
+      grn_no='',
+      grn_date=moment().format("YYYY-MM-DD"),
+      rmcode='',
+      eds='',
+      rm='',
+      received_qty=0,
+      product_name='',
+      form_format='',
+      comment='',
+      duedate=moment().format("YYYY-MM-DD"),
+      // observation_print_view=[],
+      // observation_format=[],
+
+      header_format=[],
+      remarks='',
+      approved_by=0,
+      batch='',
+      skiplevel_status=false,
+      roletype='',
+      status='pending',
+      notes='',
+      skuid='',
+      sk_index=0,
+      sk_order='',
+      qas_form_one_values={},
+      qas_form_one_validation={},
+      date=moment().format("YYYY-MM-DD"),
+
+        }=qasFormOneArray[qasForm1Index]
+
+//
+var setHeaderFormat=_.map(header_format,(x)=>{
+
+  // if(x.name=='ir') x['value']=irNum;
+  if(x.name=='ir') x['value']=irNum;
+  return x;
+})
+
+        // console.log("before",qasFormOneArray[qasForm1Index])
+  var qasformone= await Qasformone.create({
+    invoice_table_id:invoiceTable.id,
+    operator_id,
+    product_name,
+    supplier_name,
+    invoice_client_id,
+    rmcode,
+    eds,
+    rm,
+    form_format,
+    comment,
+    invoice_no,
+    invoice_date,
+    invoice_qty:parseFloat(invoice_qty)||0,
+    ir:irNum,
+    grn_no,
+    grn_date,
+    received_qty:parseFloat(received_qty)||0,
+    duedate,
+    // observation_print_view,
+    // observation_format,
+    header_format:setHeaderFormat,
+    remarks,
+    approved_by,
+    skiplevel_status,
+    status,
+    roletype,
+    batch,
+    branch,
+    notes,
+    skuid,
+    sk_index,
+    sk_order,
+
+    qas_form_one_values,
+    qas_form_one_validation,
+
+    date
+
+  })
+var qasform2Products=getInvoice.qasForm2New
+  var qasFormOneId=qasformone.id||0;
+
+  for(var qasform2Productindex in qasform2Products)
+{
+  // var product=qasform2Products[qasform2Productindex];
+// console.log("product",product)
+
+// var {
+//   // qas_form_one_id=0,
+//   // invoice_client_id='',
+//   // rmcode='',
+//   // eds='',
+//   // supplier_name='',
+//   // qty=0,
+//   // grn_date='',
+//   error_status=false,
+//   batch_no='',
+//   // coil='',
+//   weight=0,
+//   width_one=0,
+//   width_two=0,
+//   thick_one=0,
+//   thick_two=0,
+//   lot_no='',
+//   validation='',
+//   qas_form_two_values={},
+//   qas_form_two_validation={}
+//   // date=moment().format("YYYY-MM-DD"),
+
+// }=product
+
+var qasform2=qasform2Products[qasform2Productindex];
+console.log("++++qasform2+++")
+console.log(qasform2)
+var createQasFormTwo={
+  invoice_table_id:invoiceTable.id,
+
+    qas_form_one_id:parseFloat(qasFormOneId)||0,
+    invoice_client_id:qasform2.invoice_client_id,
+    invoice_no:getInvoice.invoice_no||'',//
+    rmcode:getInvoice['rmcode'],
+    eds:getInvoice['eds'],
+    supplier_name:getInvoice['supplier_name'],
+    // qty:parseFloat(qty)||0,
+    grn_date:getInvoice['grn_date'],
+    grn_no:getInvoice['grn_no']||'',//
+    error_status:qasform2.error_status,
+    batch_no:qasform2.batch_no||'',
+    // coil,
+    weight:qasform2.weight||"",
+    // width_one:qasform2.width_one||"",
+    // width_two:qasform2.width_two||'',
+    // thick_one:qasform2.thick_one||'',
+    // thick_two:qasform2.thick_two||'',
+    lot_no:qasform2.lot_no||'',
+    validation:qasform2.validation||false,
+    qas_form_two_values:qasform2.qas_form_two_values||{},
+    qas_form_two_validation:qasform2.qas_form_two_validation||{},
+    date:moment().format("YYYY-MM-DD"),///product['date'],
+   other:{}
+   }
+await Qasformtwo.create(createQasFormTwo)
+}
+
+
+  // console.log("after")
+  // console.log('qasformone',qasformone)
+
+  }
+
+
 Ws.io.emit('invoice_add', {  })
 return ctx.response.send({
   successStatus:true,

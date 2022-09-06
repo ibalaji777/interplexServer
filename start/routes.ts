@@ -29,7 +29,9 @@ import MapproductcodesController from 'App/Controllers/Http/MapproductcodesContr
 import MasterproductsController from 'App/Controllers/Http/MasterproductsController'
 import PrintconfigsController from 'App/Controllers/Http/PrintconfigsController'
 import Qasform2configsController from 'App/Controllers/Http/Qasform2configsController'
+import QasformonedefaultsController from 'App/Controllers/Http/QasformonedefaultsController'
 import QasformonesController from 'App/Controllers/Http/QasformonesController'
+import QasformtwodefaultsController from 'App/Controllers/Http/QasformtwodefaultsController'
 import QasformtwosController from 'App/Controllers/Http/QasformtwosController'
 import SapimportconfigsController from 'App/Controllers/Http/SapimportconfigsController'
 import UnitsController from 'App/Controllers/Http/UnitsController'
@@ -37,6 +39,7 @@ import UploadtypesController from 'App/Controllers/Http/UploadtypesController'
 import UsersController from 'App/Controllers/Http/UsersController'
 import WhatsappsController from 'App/Controllers/Http/WhatsappsController'
 import ConfigProductFormat from 'App/Models/ConfigProductFormat'
+import Qasformtwodefault from 'App/Models/Qasformtwodefault'
 
 
 
@@ -182,11 +185,11 @@ Route.post('/setheaderconfig', async (ctx) => {
 return new HeaderconfigsController().setHeaderConfig(ctx)
 })
 Route.get('/readqasform2config', async (ctx) => {
-return new Qasform2configsController().readQasForm2Config(ctx)
+return new Qasform2configsController().getDefaultImport(ctx)
 })
 
 Route.post('/headerqasform2/update', async (ctx) => {
-return new Qasform2configsController().updateQasForm2Config(ctx)
+return new Qasform2configsController().setDefaultImport(ctx)
 })
 
 // Route.post('/productbatch/check', async (ctx) => {
@@ -201,6 +204,12 @@ return new QasformonesController().checkProductsBatch(ctx)
 Route.post('/addInvoices', async (ctx) => {
 return new QasformonesController().addInvoices(ctx)
 })
+
+Route.post('/addInvoicesingle', async (ctx) => {
+  return new QasformonesController().addInvoiceSingle(ctx)
+  })
+
+
 
 Route.post('/invoiceupload', async (ctx) => {
 return new QasformonesController().invoiceUpload(ctx)
@@ -372,6 +381,29 @@ Route.get('/datOneCode/read',async(ctx)=>{
           Route.post('/setprintconfig',async(ctx)=>{
           return new PrintconfigsController().setPrintConfig(ctx)
           })
+
+
+
+
+          Route.get('/getqasformonedefault',async(ctx)=>{
+            return new QasformonedefaultsController().get(ctx)
+            })
+
+            Route.post('/setqasformonedefault',async(ctx)=>{
+              return new QasformonedefaultsController().set(ctx)
+
+            })
+
+
+            Route.get('/getqasformtwodefault',async(ctx)=>{
+              return new QasformtwodefaultsController().get(ctx)
+              })
+
+              Route.post('/setqasformtwodefault',async(ctx)=>{
+              return new QasformtwodefaultsController().set(ctx)
+              })
+
+
 
 
 

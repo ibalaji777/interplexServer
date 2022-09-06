@@ -1,13 +1,13 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'qasform2configs'
+  protected tableName = 'qasformonedefaults'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('branch')
-      table.specificType('config','json  ARRAY').nullable()
+      table.jsonb('config')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

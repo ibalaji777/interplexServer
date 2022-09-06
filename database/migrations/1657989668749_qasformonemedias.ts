@@ -13,6 +13,7 @@ export default class extends BaseSchema {
       table.string('name')
       table.string('full_name')
       table.string('file_type')
+      table.string('title')
 
 
       /**

@@ -18,6 +18,8 @@ public name:String
 public full_name:String
 @column()
 public file_type:String
+@column()
+public title:String
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

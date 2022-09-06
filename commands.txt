@@ -53,6 +53,10 @@ node ace make:model Sapimportconfig -cm //new
 
 node ace make:model Printconfig -cm //new
 
+node ace make:model Qasformonedefault -cm //new
+node ace make:model Qasformtwodefault -cm //new
+
+
 
 CREATED FILES FOR ABOVE COMMANDS ARE
 ----------------------------------------------------------------
