@@ -23,6 +23,9 @@ import AssurancemediasController from 'App/Controllers/Http/AssurancemediasContr
 import BranchesController from 'App/Controllers/Http/BranchesController'
 import ConfigProductFormatsController from 'App/Controllers/Http/ConfigProductFormatsController'
 import DefaultConfigsController from 'App/Controllers/Http/DefaultConfigsController'
+import GuiHeadersController from 'App/Controllers/Http/GuiHeadersController'
+import GuiqasformonesController from 'App/Controllers/Http/GuiqasformonesController'
+import GuiqasformtwosController from 'App/Controllers/Http/GuiqasformtwosController'
 import HeaderconfigsController from 'App/Controllers/Http/HeaderconfigsController'
 import LabelsettingsController from 'App/Controllers/Http/LabelsettingsController'
 import MapproductcodesController from 'App/Controllers/Http/MapproductcodesController'
@@ -403,6 +406,33 @@ Route.get('/datOneCode/read',async(ctx)=>{
               return new QasformtwodefaultsController().set(ctx)
               })
 
+
+
+              Route.get('/getguiqasformone',async(ctx)=>{
+                return new GuiqasformonesController().get(ctx)
+                })
+
+                Route.post('/setguiqasformone',async(ctx)=>{
+                return new GuiqasformonesController().set(ctx)
+                })
+
+
+                Route.get('/getguiqasformtwo',async(ctx)=>{
+                  return new GuiqasformtwosController().get(ctx)
+                  })
+
+                  Route.post('/setguiqasformtwo',async(ctx)=>{
+                  return new GuiqasformtwosController().set(ctx)
+                  })
+
+
+                  Route.get('/getguiheader',async(ctx)=>{
+                    return new GuiHeadersController().get(ctx)
+                    })
+
+                    Route.post('/setguiheader',async(ctx)=>{
+                    return new GuiHeadersController().set(ctx)
+                    })
 
 
 

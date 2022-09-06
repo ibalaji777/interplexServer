@@ -56,6 +56,10 @@ node ace make:model Printconfig -cm //new
 node ace make:model Qasformonedefault -cm //new
 node ace make:model Qasformtwodefault -cm //new
 
+node ace make:model Guiqasformone -cm //new
+node ace make:model Guiqasformtwo -cm //new
+
+node ace make:model GuiHeader -cm //new
 
 
 CREATED FILES FOR ABOVE COMMANDS ARE
