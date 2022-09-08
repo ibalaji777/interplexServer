@@ -921,7 +921,7 @@ var setHeaderFormat=_.map(header_format,(x)=>{
     date
 
   })
-var qasform2Products=getInvoice.qasForm2New
+  var qasform2Products=qasFormOneArray[qasForm1Index].qasForm2New
   var qasFormOneId=qasformone.id||0;
 
   for(var qasform2Productindex in qasform2Products)
