@@ -6,26 +6,28 @@ export default class extends BaseSchema {
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('invoice_table_id').nullable()
-      table.string('invoice_no').nullable()//
-      table.string('invoice_client_id').nullable()
-      table.integer('qas_form_one_id').nullable()
-      table.string('rmcode').nullable()
-      table.string('eds').nullable()
-      table.string('supplier_name').nullable()
-      // table.double('qty').nullable()
-      table.string('grn_no').nullable()//
-      table.date('grn_date').nullable()//
-      table.boolean('error_status').nullable()
-      table.string('batch_no').nullable()
-      // table.string('coil').nullable()
-      table.string('weight').nullable()
-      // table.string('width_one').nullable()
-      // table.string('width_two').nullable()
-      // table.string('thick_one').nullable()
-      // table.string('thick_two').nullable()
-      table.string('lot_no').nullable()
-      table.string('validation').nullable()
+      table.string('branch')
+      table.integer('invoice_table_id')
+      table.string('invoice_no')//
+      table.string('invoice_client_id')
+      table.integer('qas_form_one_id')
+      table.string('rmcode')
+
+      table.string('eds')
+      table.string('supplier_name')
+      // table.double('qty')
+      table.string('grn_no')//
+      table.date('grn_date')//
+      table.boolean('error_status')
+      table.string('batch_no')
+      // table.string('coil')
+      table.string('weight')
+      // table.string('width_one')
+      // table.string('width_two')
+      // table.string('thick_one')
+      // table.string('thick_two')
+      table.string('lot_no')
+      table.string('validation')
       table.jsonb('qas_form_two_values')//new
       table.jsonb('qas_form_two_validation')//new
       table.jsonb('other')

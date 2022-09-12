@@ -6,6 +6,9 @@ export default class Qasformtwo extends BaseModel {
   public id: number
 
   @column()
+  public branch:String
+
+  @column()
   public invoice_table_id:Number
 
 @column()

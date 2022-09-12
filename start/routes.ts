@@ -435,6 +435,9 @@ Route.get('/datOneCode/read',async(ctx)=>{
                     })
 
 
+Route.post('/skiplevel',async(ctx)=>{
+ return new QasformonesController().skiplevel(ctx)
+})
 
 
   // public async getelement(ctx:HttpContextContract){

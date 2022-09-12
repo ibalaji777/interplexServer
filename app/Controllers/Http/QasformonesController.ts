@@ -101,6 +101,55 @@ console.log(qasFormTwoInput)
   // await Qasformtwo.updateOrCreateMany('id', qasFormTwoInput)
   return ctx.response.send(qas)
 }
+
+
+public async skiplevel(ctx){
+
+var branch=ctx.request.headers()['branch']||''
+var invoice_no=ctx.request.input('invoice_no')
+var rmcode=ctx.request.input('rmcode')
+var supplier_name=ctx.request.input('supplier_name')
+// var total= await Database.from('qasformtwos')
+// .groupBy('supplier_name','rmcode')
+// .where('branch',branch)
+// .countDistinct("*","total").first(
+//   )
+var total= await Database.from('qasformtwos')
+.where('branch',branch)
+.where('rmcode',rmcode)
+.where('supplier_name',supplier_name)
+.countDistinct("invoice_no","total").first(
+  )
+
+ var check=await Database.from('qasformtwos')
+  .where('branch',branch)
+  .where('rmcode',rmcode)
+  .where('supplier_name',supplier_name)
+  .where('invoice_no',invoice_no).first()
+var found=false;
+var skiplevel_status=false;
+if(check){
+found=true;
+skiplevel_status=check.skiplevel_status
+
+}
+
+return ctx.response.send({
+  total:total.total,
+  found,
+  ref:invoice_no+supplier_name+rmcode,
+  invoice_no,
+  supplier_name,
+  rmcode,
+  skiplevel_status
+
+
+})
+
+
+}
+
+
 public async irNum(branch){
 
 
@@ -751,7 +800,7 @@ console.log("++++qasform2+++")
 console.log(qasform2)
 var createQasFormTwo={
   invoice_table_id:invoiceTable.id,
-
+  branch,
     qas_form_one_id:parseFloat(qasFormOneId)||0,
     invoice_client_id:qasform2.invoice_client_id,
     invoice_no:getInvoice.invoice_no||'',//
@@ -958,7 +1007,7 @@ console.log("++++qasform2+++")
 console.log(qasform2)
 var createQasFormTwo={
   invoice_table_id:invoiceTable.id,
-
+  branch,
     qas_form_one_id:parseFloat(qasFormOneId)||0,
     invoice_client_id:qasform2.invoice_client_id,
     invoice_no:getInvoice.invoice_no||'',//
