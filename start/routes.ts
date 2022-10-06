@@ -327,6 +327,10 @@ Route.get('/labelsetting/read',async(ctx)=>{
 return new LabelsettingsController().labelSetting(ctx)
 })
 
+Route.post('/find_qas_form2',async(ctx)=>{
+  // console.log(ctx.request.all())
+  return new QasformonesController().find_qas_form2(ctx)
+  })
 Route.post('/find_qas_form',async(ctx)=>{
 console.log(ctx.request.all())
 return new QasformonesController().find_qas_form(ctx)
