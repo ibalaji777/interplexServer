@@ -30,6 +30,8 @@ selected[index]['qasFormTwo']=qasFormTwo
 
 return ctx.response.send(selected)
   }
+
+
   public async find_qas_form(ctx:HttpContextContract)
 {
 
@@ -59,6 +61,40 @@ return await Database
    .leftJoin('users','users.id','=','qasformones.operator_id')
    .leftJoin('users as us','us.id','=','qasformones.approved_by')
 
+}
+public async find_qas_form_date(ctx:HttpContextContract)
+{
+
+  var key=ctx.request.input('key')
+  var value=ctx.request.input('value')
+  var from_date=ctx.request.input('from_date')
+  var to_date=ctx.request.input('to_date')
+  var id=ctx.request.headers()['id']||''
+  var roletype=ctx.request.input('roletype')
+  var branch=ctx.request.headers()['branch']||''
+
+
+
+  if(roletype=='operator')
+return  await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.branch',branch)//new branch
+   .where('qasformones.operator_id',id)
+   .where(key,'>=',from_date)
+   .where(key,'<=',to_date)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
+else
+return await Database
+  .from('qasformones')
+  //  .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+  //  .where('qasformones.branch',branch)//new branch
+   .where(key,'>=',from_date)
+   .where(key,'<=',to_date)
+  //  .leftJoin('users','users.id','=','qasformones.operator_id')
+  //  .leftJoin('users as us','us.id','=','qasformones.approved_by')
+
 
 
 
@@ -69,13 +105,14 @@ return await Database
 
 
 }
+
 public async updateQasForms(ctx:HttpContextContract)
 {
 
   var qasFormOneInput=ctx.request.input('qasFormOne')
   var qasFormTwoInput=ctx.request.input('qasFormTwo')
-console.log(qasFormOneInput)
-console.log(qasFormTwoInput)
+// console.log(qasFormOneInput)
+// console.log(qasFormTwoInput)
   // var qas=   await Qasformone
   // .query()
   // .where('id', qasFormOneInput.id)
@@ -85,13 +122,13 @@ console.log(qasFormTwoInput)
     await qas.merge(qasFormOneInput).save()
 
   qasFormTwoInput.forEach(async element => {
-    // console.log(element)
-    // await Qasformtwo
-    // .query()
-    // .where('id', element.id)
-    // .update(element)
-    var qas=   await Qasformtwo.findOrFail(element.id)
-    await qas.merge(element).save()
+    console.log(element.id)
+    await Qasformtwo
+    .query()
+    .where('id', element.id)
+    .update({qas_form_two_values:element.qas_form_two_values})
+    // var qas=await Qasformtwo.findOrFail(element.id)
+    // await qas.merge(element).save()
 
 
   });
@@ -149,6 +186,24 @@ return ctx.response.send({
 
 }
 
+public async filter(ctx){
+
+  // var branch=ctx.request.headers()['branch']||''
+  // var invoice_no=ctx.request.input('invoice_no')
+  // var rmcode=ctx.request.input('rmcode')
+  // var supplier_name=ctx.request.input('supplier_name')
+  // var total= await Database.from('qasformtwos')
+  // .groupBy('supplier_name','rmcode')
+  // .where('branch',branch)
+  // .countDistinct("*","total").first(
+  //   )
+  var total =await Database.rawQuery('select * from qasformones  where header_format @> "{show:true}"')
+  // var total= await Database.from('qasformones')
+  // .whereRaw('header_format @> "[{show:true}]"')
+
+return total;
+
+  }
 
 public async irNum(branch){
 

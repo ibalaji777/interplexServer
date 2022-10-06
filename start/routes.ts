@@ -224,6 +224,11 @@ return new QasformonesController().getelement(ctx)
 
 })
 
+Route.get('/test1', async (ctx) => {
+  return new QasformonesController().filter(ctx)
+
+  })
+
 
 // Route.get('/readqasformonedatelist', async (ctx) => {
 //   return new QasformonesController().getQasFormOneDateList(ctx)
@@ -326,6 +331,11 @@ Route.post('/find_qas_form',async(ctx)=>{
 console.log(ctx.request.all())
 return new QasformonesController().find_qas_form(ctx)
 })
+
+Route.post('/find_qas_form_date',async(ctx)=>{
+  return new QasformonesController().find_qas_form_date(ctx)
+  })
+
 
 Route.post('/labelgenerate',async(ctx)=>{
   return new QasformonesController().labelGenerate(ctx)
@@ -446,9 +456,9 @@ Route.post('/skiplevel',async(ctx)=>{
 //  return new UsersController().defaultUser(ctx)
 
 // })
-// Route.post('/deleteqasformone ',async(ctx)=>{
+// Route.get('/test1 ',async(ctx)=>{
 
-//   return new QasformonesController().deleteQasFormOne(ctx)
+//   return new QasformonesController().filter(ctx)
 //    })
 
 ///----------------------------
