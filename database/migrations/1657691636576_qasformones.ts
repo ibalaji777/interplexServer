@@ -33,7 +33,7 @@ export default class extends BaseSchema {
       // table.specificType('qasformtwo','json ARRAY').nullable()
       // table.specificType('observation_print_view','json ARRAY').nullable()
       // table.specificType('observation_format','json ARRAY').nullable()
-      table.specificType('header_format','json ARRAY').nullable()
+      table.specificType('header_format','jsonb ARRAY').nullable()
       table.string('remarks').nullable()
       table.string('status').nullable()//(approved or acceptedOnDeviation or ppap)
       table.integer('approved_by').nullable()//user id approver or admin

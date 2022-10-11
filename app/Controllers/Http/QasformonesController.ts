@@ -225,6 +225,41 @@ return ctx.response.send({
 
 }
 
+public async findbyheader(ctx){
+  var branch=ctx.request.headers()['branch']||''
+  var find=JSON.stringify(ctx.request.input('find'))
+   
+return await Database
+  .from('qasformones')
+  .where('header_format','@>',find)
+  var id=ctx.request.headers()['id']||''
+  var roletype=ctx.request.input('roletype')
+  var branch=ctx.request.headers()['branch']||''
+
+
+
+  if(roletype=='operator')
+return  await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.branch',branch)//new branch
+   .where('qasformones.operator_id',id)
+   .where('qasformones.header_format','@>',find)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
+else
+return await Database
+  .from('qasformones')
+   .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
+   .where('qasformones.branch',branch)//new branch
+   .where('qasformones.header_format','@>',find)
+   .leftJoin('users','users.id','=','qasformones.operator_id')
+   .leftJoin('users as us','us.id','=','qasformones.approved_by')
+
+  
+
+
+}
 public async filter(ctx){
 
   // var branch=ctx.request.headers()['branch']||''
@@ -236,9 +271,40 @@ public async filter(ctx){
   // .where('branch',branch)
   // .countDistinct("*","total").first(
   //   )
-  var total =await Database.rawQuery('select * from qasformones  where header_format @> "{show:true}"')
+  // var total =await Database.rawQuery('select * from qasformones  where "{label:supplier}" = ANY (header_format)')
+
+// var total =await Database.rawQuery(`select s.*,j from
+// qasformones  s
+//  cross join lateral json_array_elements(header_format) as j
+//  WHERE j->>label like 'sup%'`)
+
   // var total= await Database.from('qasformones')
-  // .whereRaw('header_format @> "[{show:true}]"')
+  // .whereRaw('qas_form_one_values @> "{c:C}" ')
+
+  // var total =await Database.rawQuery('select * from qasformones  where "{c:C}" = ANY (qas_form_one_values)')
+//json column
+//   var total =await Database.rawQuery(`SELECT *
+// FROM   qasformones q
+// WHERE  EXISTS (
+//    SELECT FROM unnest(q.header_format) js
+//    WHERE  js->>'label' = 'SUPPLIER'   -- match case!
+//    )`)
+
+var total= await Database
+.from('qasformones')
+.select("*")
+.where('header_format','@>','[{"label":"SUPPLIER"}]')
+
+  //  var total =await Database.rawQuery(`SELECT *
+  //  FROM   qasformones q
+  //  WHERE  header_format @> '[{"ponumber":"SUPPLIER"}]'`)
+   
+   
+  //success
+  // var total =await Database.rawQuery("select * from qasformones where qas_form_one_values ->> 'c' = 'C'")
+  // var total =await Database.rawQuery(`SELECT *
+  // FROM   qasformones q
+  // WHERE  header_format @> '[{"label":"SUPPLIER"}]'`)
 
 return total;
 
@@ -256,7 +322,8 @@ and EXTRACT('year' from created_at)=`+year+``)
 .where('branch',branch)
 .count("*","total").first()
 
-return parseFloat(total.total||0)+1;
+var inc= parseFloat(total.total||0)+1;
+ return inc;
 // if(!await Database.from('irnums').where('id',branch).first()){
 
 //    await Irnum.create({

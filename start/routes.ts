@@ -318,6 +318,11 @@ return new MasterproductsController().checkBatchNo(ctx)
 Route.post('/qasforms/update',async(ctx)=>{
 return new QasformonesController().updateQasForms(ctx)
 })
+Route.post('/findbyheader',async(ctx)=>{
+  return new QasformonesController().findbyheader(ctx)
+  })
+  
+
 
 Route.post('/labelsetting/save',async(ctx)=>{
 return new LabelsettingsController().labelSettingSave(ctx)
