@@ -22,6 +22,7 @@ import Route from '@ioc:Adonis/Core/Route'
 import AssurancemediasController from 'App/Controllers/Http/AssurancemediasController'
 import BranchesController from 'App/Controllers/Http/BranchesController'
 import ConfigProductFormatsController from 'App/Controllers/Http/ConfigProductFormatsController'
+import CustomrulesController from 'App/Controllers/Http/CustomrulesController'
 import DefaultConfigsController from 'App/Controllers/Http/DefaultConfigsController'
 import GuiHeadersController from 'App/Controllers/Http/GuiHeadersController'
 import GuiqasformonesController from 'App/Controllers/Http/GuiqasformonesController'
@@ -321,7 +322,7 @@ return new QasformonesController().updateQasForms(ctx)
 Route.post('/findbyheader',async(ctx)=>{
   return new QasformonesController().findbyheader(ctx)
   })
-  
+
 
 
 Route.post('/labelsetting/save',async(ctx)=>{
@@ -457,6 +458,20 @@ Route.get('/datOneCode/read',async(ctx)=>{
 Route.post('/skiplevel',async(ctx)=>{
  return new QasformonesController().skiplevel(ctx)
 })
+Route.post('/saverule',async(ctx)=>{
+  return new CustomrulesController().save(ctx)
+ })
+ Route.post('/ruleDelete',async(ctx)=>{
+  return new CustomrulesController().delete(ctx)
+ })
+
+
+ Route.get('/ruleslist',async(ctx)=>{
+  return new CustomrulesController().ruleslist(ctx)
+ })
+
+
+
 
 
   // public async getelement(ctx:HttpContextContract){

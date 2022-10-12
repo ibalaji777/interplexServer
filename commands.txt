@@ -61,6 +61,10 @@ node ace make:model Guiqasformtwo -cm //new
 
 node ace make:model GuiHeader -cm //new
 
+node ace make:model Customfilter -cm -r//new
+node ace make:model Customrules -cm -r//new
+
+
 
 CREATED FILES FOR ABOVE COMMANDS ARE
 ----------------------------------------------------------------
