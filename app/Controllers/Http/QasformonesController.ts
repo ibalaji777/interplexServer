@@ -227,15 +227,22 @@ return ctx.response.send({
 
 public async findbyheader(ctx){
   var branch=ctx.request.headers()['branch']||''
-  var find=JSON.stringify(ctx.request.input('find'))
-   
-return await Database
-  .from('qasformones')
-  .where('header_format','@>',find)
+  // var find=JSON.stringify(ctx.request.input('find'))
+  var find=ctx.request.input('find')
+
+  var value=find.value;
+  // var key=find.key
+  var prepare={}
+  prepare['value']=value;
+  var findQuery=JSON.stringify([prepare])
+  console.log(find)
+console.log(prepare,value,findQuery)
+// return await Database
+//   .from('qasformones')
+//   .where('header_format','@>',findQuery)
   var id=ctx.request.headers()['id']||''
   var roletype=ctx.request.input('roletype')
   var branch=ctx.request.headers()['branch']||''
-
 
 
   if(roletype=='operator')
@@ -244,7 +251,7 @@ return  await Database
    .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
    .where('qasformones.branch',branch)//new branch
    .where('qasformones.operator_id',id)
-   .where('qasformones.header_format','@>',find)
+   .where('qasformones.header_format','@>',findQuery)
    .leftJoin('users','users.id','=','qasformones.operator_id')
    .leftJoin('users as us','us.id','=','qasformones.approved_by')
 else
@@ -252,11 +259,11 @@ return await Database
   .from('qasformones')
    .select("qasformones.*","users.name as operator_name","users.branch as operator_branch","us.name as approver_name")
    .where('qasformones.branch',branch)//new branch
-   .where('qasformones.header_format','@>',find)
+   .where('qasformones.header_format','@>',findQuery)
    .leftJoin('users','users.id','=','qasformones.operator_id')
    .leftJoin('users as us','us.id','=','qasformones.approved_by')
 
-  
+
 
 
 }
@@ -298,8 +305,8 @@ var total= await Database
   //  var total =await Database.rawQuery(`SELECT *
   //  FROM   qasformones q
   //  WHERE  header_format @> '[{"ponumber":"SUPPLIER"}]'`)
-   
-   
+
+
   //success
   // var total =await Database.rawQuery("select * from qasformones where qas_form_one_values ->> 'c' = 'C'")
   // var total =await Database.rawQuery(`SELECT *

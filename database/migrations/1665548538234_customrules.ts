@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('branch')
       table.string('name')
-      table.string('rule')
+      table.text('rule')
       table.jsonb('other')
 
       /**
