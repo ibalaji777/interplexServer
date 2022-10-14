@@ -158,6 +158,7 @@ public async updateQasForms(ctx:HttpContextContract)
 
   // .update(qasFormOneInput)
   var qas=   await Qasformone.findOrFail(qasFormOneInput.id)
+  qasFormOneInput['header_format']=JSON.stringify(qasFormOneInput.header_format)
     await qas.merge(qasFormOneInput).save()
 
   qasFormTwoInput.forEach(async element => {
@@ -572,6 +573,7 @@ id=0,
       observation_print_view,
       observation_format,
       header_format,
+      // header_format:JSON.stringify(header_format),
       remarks,
       approved_by,
       skiplevel_status,
@@ -932,6 +934,7 @@ var setHeaderFormat=_.map(header_format,(x)=>{
     date
 
   })
+  console.log(qasformone)
 var qasform2Products=qasFormOneArray[qasForm1Index].qasForm2New
   var qasFormOneId=qasformone.id||0;
 for(var qasform2Productindex in qasform2Products)
@@ -1119,7 +1122,7 @@ var setHeaderFormat=_.map(header_format,(x)=>{
     duedate,
     // observation_print_view,
     // observation_format,
-    header_format:setHeaderFormat,
+    header_format:JSON.stringify(setHeaderFormat),//test
     remarks,
     approved_by,
     skiplevel_status,
